@@ -5,6 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Image from "next/image";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
 interface BlogPost {
   id: number;
@@ -30,6 +31,7 @@ export default function BlogPostPage({
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const postId = params.slug[0];
@@ -50,6 +52,30 @@ export default function BlogPostPage({
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !post) return;
+
+    try {
+      setUploading(true);
+      const imageUrl = await uploadToCloudinary(file);
+
+      const { error } = await supabase
+        .from("posts")
+        .update({ image_url: imageUrl })
+        .eq("id", post.id);
+
+      if (error) throw error;
+      setPost({ ...post, image_url: imageUrl });
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to upload image"
+      );
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -92,16 +118,31 @@ export default function BlogPostPage({
       <div className="min-h-screen pt-24 px-4">
         <div className="max-w-3xl mx-auto">
           <article className="prose dark:prose-invert max-w-none">
-            {post.image_url && (
-              <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
+            <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
+              {post.image_url ? (
                 <Image
                   src={post.image_url}
                   alt={post.title}
                   fill
                   className="object-cover"
                 />
-              </div>
-            )}
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+                  <label className="cursor-pointer">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                    <span className="text-gray-500 dark:text-gray-400">
+                      {uploading ? "Uploading..." : "Click to upload image"}
+                    </span>
+                  </label>
+                </div>
+              )}
+            </div>
 
             <h1 className="text-4xl font-pirata mb-4 text-eerie-black dark:text-parchment">
               {post.title}
