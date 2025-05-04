@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
-import { v4 as uuidv4 } from "uuid";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,7 +11,7 @@ const supabase = createClient(
 
 interface PostFormProps {
   action: "new" | "edit";
-  postId?: string;
+  postId?: number;
 }
 
 export function PostForm({ action, postId }: PostFormProps) {
@@ -23,10 +22,29 @@ export function PostForm({ action, postId }: PostFormProps) {
   const router = useRouter();
 
   useEffect(() => {
+    checkAuth();
     if (action === "edit" && postId) {
       fetchPost();
     }
   }, [action, postId]);
+
+  const checkAuth = async () => {
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.getSession();
+    console.log("Current session:", session);
+    if (error) {
+      console.error("Auth error:", error);
+      router.push("/admin/login");
+      return;
+    }
+    if (!session) {
+      console.error("No session found");
+      router.push("/admin/login");
+      return;
+    }
+  };
 
   const fetchPost = async () => {
     try {
@@ -46,54 +64,135 @@ export function PostForm({ action, postId }: PostFormProps) {
     }
   };
 
+  const uploadImage = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append(
+      "upload_preset",
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "blog_preset"
+    );
+    formData.append(
+      "cloud_name",
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!
+    );
+
+    console.log("Uploading to Cloudinary with:", {
+      uploadPreset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET,
+      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    });
+
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      console.error("Cloudinary error response:", errorData);
+      throw new Error(
+        `Cloudinary upload failed: ${response.statusText}${
+          errorData ? ` - ${JSON.stringify(errorData)}` : ""
+        }`
+      );
+    }
+
+    const data = await response.json();
+    if (!data.secure_url) {
+      throw new Error("No secure URL received from Cloudinary");
+    }
+
+    return data.secure_url;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      // Check authentication before proceeding
+      const {
+        data: { session },
+        error: authError,
+      } = await supabase.auth.getSession();
+      console.log("Session during submit:", session);
+
+      if (authError) {
+        console.error("Auth error during submit:", authError);
+        throw new Error("Authentication error");
+      }
+
+      if (!session) {
+        console.error("No session during submit");
+        throw new Error("Not authenticated");
+      }
+
       let imageUrl = "";
 
       if (image) {
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", "blog_preset");
-
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        const data = await response.json();
-        imageUrl = data.secure_url;
+        try {
+          imageUrl = await uploadImage(image);
+          console.log("Image uploaded successfully:", imageUrl);
+        } catch (uploadError) {
+          console.error("Image upload error:", uploadError);
+          throw new Error(
+            `Failed to upload image: ${
+              uploadError instanceof Error
+                ? uploadError.message
+                : "Unknown error"
+            }`
+          );
+        }
       }
 
       const postData = {
         title,
         content,
-        image_url: imageUrl,
+        image_url: imageUrl || undefined,
         updated_at: new Date().toISOString(),
+        tags: [],
+        user_id: session.user.id,
       };
 
+      console.log("Saving post data:", postData);
+
       if (action === "new") {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("posts")
-          .insert([{ ...postData, id: uuidv4() }]);
-        if (error) throw error;
+          .insert([postData])
+          .select()
+          .single();
+
+        if (error) {
+          console.error("Supabase insert error:", error);
+          throw new Error(`Failed to create post: ${error.message}`);
+        }
+        console.log("Created post:", data);
       } else if (action === "edit" && postId) {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("posts")
           .update(postData)
-          .eq("id", postId);
-        if (error) throw error;
+          .eq("id", postId)
+          .select()
+          .single();
+
+        if (error) {
+          console.error("Supabase update error:", error);
+          throw new Error(`Failed to update post: ${error.message}`);
+        }
+        console.log("Updated post:", data);
       }
 
       router.push("/admin/dashboard");
       router.refresh();
     } catch (error) {
-      console.error("Error saving post:", error);
+      console.error("Error details:", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      console.error("Error saving post:", errorMessage);
+      alert(`Failed to save post: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
