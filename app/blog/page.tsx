@@ -18,16 +18,9 @@ interface BlogPost {
   tags: string[];
 }
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_URL");
-}
-if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  throw new Error("Missing env.NEXT_PUBLIC_SUPABASE_ANON_KEY");
-}
-
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 export default function BlogPage() {
@@ -36,53 +29,55 @@ export default function BlogPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const { data, error } = await supabase
-          .from("posts")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) {
-          console.error("Supabase error:", error);
-          setError(error.message);
-          return;
-        }
-
-        setPosts(data || []);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-        setError(error instanceof Error ? error.message : "An error occurred");
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchPosts();
   }, []);
 
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen pt-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-pirata mb-8 text-eerie-black dark:text-parchment">
-            Loading posts...
-          </h1>
+      <>
+        <Header />
+        <div className="min-h-screen pt-24 px-4">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-4xl font-pirata mb-8 text-eerie-black dark:text-parchment">
+              Loading posts...
+            </h1>
+          </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen pt-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-pirata mb-8 text-eerie-black dark:text-parchment">
-            Error
-          </h1>
-          <p className="text-red-500">{error}</p>
+      <>
+        <Header />
+        <div className="min-h-screen pt-24 px-4">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-4xl font-pirata mb-8 text-eerie-black dark:text-parchment">
+              Error
+            </h1>
+            <p className="text-red-500">{error}</p>
+          </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
