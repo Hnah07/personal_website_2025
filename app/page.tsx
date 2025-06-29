@@ -6,13 +6,11 @@ import PortfolioSection from "@/components/sections/home/PortfolioSection";
 import FollowMeSection from "@/components/sections/home/FollowMeSection";
 import ContactSection from "@/components/sections/home/ContactSection";
 import ScrollToTop from "@/components/shared/ScrollToTop";
-import HashScrollHandler from "@/components/shared/HashScrollHandler";
 
 export default function Home() {
   return (
     <main className="flex flex-col items-center">
       <Header />
-      <HashScrollHandler />
       <div className="w-full">
         <Hero />
       </div>
