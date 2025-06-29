@@ -5,19 +5,39 @@ import Image from "next/image";
 import ThemeToggle from "../ThemeToggle";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, usePathname } from "next/navigation";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handlePortfolioClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (pathname === "/") {
+      // If we're on the home page, scroll to the section
+      const element = document.getElementById("portfolioSection");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If we're on another page, navigate to home and then scroll
+      router.push("/#portfolioSection");
+    }
+
+    setIsMenuOpen(false);
+  };
+
   const navItems = [
-    { name: "Portfolio", href: "/portfolio" },
-    { name: "Blog", href: "/blog" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Portfolio", href: "#portfolioSection", isPortfolio: true },
+    { name: "Blog", href: "/blog", isPortfolio: false },
+    { name: "About", href: "/about", isPortfolio: false },
+    { name: "Contact", href: "/contact", isPortfolio: false },
   ];
 
   return (
@@ -39,13 +59,23 @@ const Header = () => {
             <ul className="flex">
               {navItems.map((item) => (
                 <li key={item.name} className="ml-6 text-base relative group">
-                  <Link
-                    href={item.href}
-                    className="text-eerie-black dark:text-parchment no-underline relative transition-colors duration-300 hover:text-brilliant-rose"
-                  >
-                    {item.name}
-                    <span className="absolute left-0 -bottom-[5px] h-[2px] w-full scale-x-0 opacity-0 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100 origin-left bg-gradient-to-r from-brilliant-rose to-verdigris"></span>
-                  </Link>
+                  {item.isPortfolio ? (
+                    <button
+                      onClick={handlePortfolioClick}
+                      className="text-eerie-black dark:text-parchment no-underline relative transition-colors duration-300 hover:text-brilliant-rose bg-transparent border-none cursor-pointer"
+                    >
+                      {item.name}
+                      <span className="absolute left-0 -bottom-[5px] h-[2px] w-full scale-x-0 opacity-0 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100 origin-left bg-gradient-to-r from-brilliant-rose to-verdigris"></span>
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="text-eerie-black dark:text-parchment no-underline relative transition-colors duration-300 hover:text-brilliant-rose"
+                    >
+                      {item.name}
+                      <span className="absolute left-0 -bottom-[5px] h-[2px] w-full scale-x-0 opacity-0 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100 origin-left bg-gradient-to-r from-brilliant-rose to-verdigris"></span>
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -96,13 +126,22 @@ const Header = () => {
               <ul className="flex flex-col items-center gap-8">
                 {navItems.map((item) => (
                   <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="text-eerie-black dark:text-parchment text-2xl block py-2 hover:text-brilliant-rose transition-colors duration-300"
-                    >
-                      {item.name}
-                    </Link>
+                    {item.isPortfolio ? (
+                      <button
+                        onClick={handlePortfolioClick}
+                        className="text-eerie-black dark:text-parchment text-2xl block py-2 hover:text-brilliant-rose transition-colors duration-300 bg-transparent border-none cursor-pointer"
+                      >
+                        {item.name}
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="text-eerie-black dark:text-parchment text-2xl block py-2 hover:text-brilliant-rose transition-colors duration-300"
+                      >
+                        {item.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
