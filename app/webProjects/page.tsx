@@ -28,7 +28,8 @@ const WebProjects = () => {
           </Badge>
         ))}
       </div>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* TODO: when more projects are added, remove the mb-16 */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <Link href="/webProjects/resonance" className="block cursor-pointer">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-10 bg-gradient-to-r from-brilliant-rose/20 to-verdigris/20 dark:from-brilliant-rose/15 dark:to-verdigris/15 p-8 rounded-lg shadow-md border border-brilliant-rose/10 dark:border-verdigris/10 transition-all duration-500 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] hover:border-brilliant-rose/30 dark:hover:shadow-[0_0_30px_rgba(20,184,166,0.2)] dark:hover:border-verdigris/30 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-r from-brilliant-rose/0 via-brilliant-rose/3 to-verdigris/0 dark:from-brilliant-rose/0 dark:via-verdigris/3 dark:to-verdigris/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
