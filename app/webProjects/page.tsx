@@ -37,17 +37,12 @@ const WebProjects = () => {
             <div className="space-y-4 relative z-10">
               <h2 className="text-4xl font-bold">Resonance</h2>
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                Resonance is a full stack web application designed for music
-                lovers who enjoy attending live concerts and want to track their
-                experiences. The platform allows users to check in to concerts,
-                select which artists they saw, upload photos, and view a
-                timeline of their live music journey. It also includes social
-                features such as following other users, viewing friends&apos;
-                check-ins, and discovering upcoming events nearby. The app is
-                built with a Laravel API backend and a Next.js frontend, and
-                supports user authentication, geolocation-based filtering, and
-                personalized statistics. Resonance combines my passion for music
-                and technology into a fully functional, scalable web app.
+                A full stack web application for music lovers to track their
+                live concert experiences. Users can check in to concerts, select
+                artists they saw, upload photos, and view their music journey
+                timeline. Built as my final project for the one-year Full Stack
+                Developer course, featuring social features, geolocation
+                filtering, and personalized statistics.
               </p>
               <p className="text-xs text-brilliant-rose font-medium">
                 🚧 Currently a Proof of Concept (POC) - Work in Progress 🚧
