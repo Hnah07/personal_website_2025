@@ -40,9 +40,9 @@ const WebProjects = () => {
                 A full stack web application for music lovers to track their
                 live concert experiences. Users can check in to concerts, select
                 artists they saw, upload photos, and view their music journey
-                timeline. Built as my final project for the one-year Full Stack
-                Developer course, featuring social features, geolocation
-                filtering, and personalized statistics.
+                timeline. Featuring social features, geolocation filtering, and
+                personalized statistics. Built as my final project for the one
+                year Full Stack Developer course at Syntra AB.
               </p>
               <p className="text-xs text-brilliant-rose font-medium">
                 🚧 Currently a Proof of Concept (POC) - Work in Progress 🚧
