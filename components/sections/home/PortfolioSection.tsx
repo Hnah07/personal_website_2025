@@ -7,7 +7,7 @@ const PortfolioSection = () => {
   const portfolioItems = [
     {
       title: "Web",
-      image: "/css-tip-calculator.png",
+      image: "/mockup-resonance.png",
       href: "/webProjects",
     },
     {
