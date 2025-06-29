@@ -45,10 +45,7 @@ const AboutMeSection = () => {
           <p className="pb-8">
             Currently, I&apos;m on an exciting journey of making a{" "}
             <Highlight index={7}>career switch</Highlight>, driven by my love
-            for{" "}
-            <Highlight index={8}>
-              creativity, technology, and meaningful digital solutions.
-            </Highlight>
+            for creativity, technology, and meaningful digital solutions.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <PrimaryButton href="/cv_hannah_casier.pdf">View cv</PrimaryButton>

@@ -54,6 +54,16 @@
   }
 }
 
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @layer utilities {
   .animate-fade-in-left {
     animation: fadeInLeft 2s ease-out;
@@ -69,6 +79,10 @@
 
   .animate-fade-in-up {
     animation: fadeInUp 1s ease-out forwards;
+  }
+
+  .animate-gradient-x {
+    animation: gradient-x 3s ease infinite;
   }
 
   .opacity-0 {

@@ -8,7 +8,7 @@ const PortfolioSection = () => {
     {
       title: "Web",
       image: "/css-tip-calculator.png",
-      href: "#",
+      href: "/webProjects",
     },
     {
       title: "Design",
@@ -23,7 +23,7 @@ const PortfolioSection = () => {
   ];
 
   return (
-    <section className="py-20">
+    <section id="portfolioSection" className="py-20">
       <div className="flex flex-col items-center">
         <h2 className="mb-8">Portfolio</h2>
         <div className="flex flex-col md:flex-row gap-8 w-full items-center justify-center">
