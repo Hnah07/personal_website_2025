@@ -2,6 +2,7 @@ import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import Badge from "@/components/shared/Badge";
 import Image from "next/image";
+import Link from "next/link";
 
 const WebProjects = () => {
   const technologies = [
@@ -28,33 +29,48 @@ const WebProjects = () => {
         ))}
       </div>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-10 bg-gradient-to-r from-brilliant-rose/20 to-verdigris/20 dark:from-brilliant-rose/15 dark:to-verdigris/15 p-8 rounded-lg shadow-md border border-brilliant-rose/10 dark:border-verdigris/10">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-bold">Resonance</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-              Resonance is a full stack web application designed for music
-              lovers who enjoy attending live concerts and want to track their
-              experiences. The platform allows users to check in to concerts,
-              select which artists they saw, upload photos, and view a timeline
-              of their live music journey. It also includes social features such
-              as following other users, viewing friends&apos; check-ins, and
-              discovering upcoming events nearby. The app is built with a
-              Laravel API backend and a Next.js frontend, and supports user
-              authentication, geolocation-based filtering, and personalized
-              statistics. Resonance combines my passion for music and technology
-              into a fully functional, scalable web app.
-            </p>
+        <Link href="/webProjects/resonance" className="block cursor-pointer">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-10 bg-gradient-to-r from-brilliant-rose/20 to-verdigris/20 dark:from-brilliant-rose/15 dark:to-verdigris/15 p-8 rounded-lg shadow-md border border-brilliant-rose/10 dark:border-verdigris/10 transition-all duration-500 hover:shadow-[0_0_30px_rgba(236,72,153,0.2)] hover:border-brilliant-rose/30 dark:hover:shadow-[0_0_30px_rgba(20,184,166,0.2)] dark:hover:border-verdigris/30 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-r from-brilliant-rose/0 via-brilliant-rose/3 to-verdigris/0 dark:from-brilliant-rose/0 dark:via-verdigris/3 dark:to-verdigris/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-brilliant-rose/20 via-verdigris/20 to-brilliant-rose/20 bg-[length:200%_200%] opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-gradient-x"></div>
+            <div className="absolute inset-[2px] rounded-lg bg-gradient-to-r from-brilliant-rose/20 to-verdigris/20 dark:from-brilliant-rose/15 dark:to-verdigris/15"></div>
+            <div className="space-y-4 relative z-10">
+              <h2 className="text-4xl font-bold">Resonance</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                Resonance is a full stack web application designed for music
+                lovers who enjoy attending live concerts and want to track their
+                experiences. The platform allows users to check in to concerts,
+                select which artists they saw, upload photos, and view a
+                timeline of their live music journey. It also includes social
+                features such as following other users, viewing friends&apos;
+                check-ins, and discovering upcoming events nearby. The app is
+                built with a Laravel API backend and a Next.js frontend, and
+                supports user authentication, geolocation-based filtering, and
+                personalized statistics. Resonance combines my passion for music
+                and technology into a fully functional, scalable web app.
+              </p>
+              <p className="text-xs text-brilliant-rose font-medium">
+                🚧 Currently a Proof of Concept (POC) - Work in Progress 🚧
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Badge>Laravel</Badge>
+                <Badge>Next.js</Badge>
+                <Badge>Vercel</Badge>
+                <Badge>Digital Ocean</Badge>
+                <Badge>MariaDB</Badge>
+              </div>
+            </div>
+            <div className="flex justify-center md:justify-end relative z-10">
+              <Image
+                src="/resonance-og-image.png"
+                alt="Resonance App Screenshot"
+                className="rounded-lg shadow-lg max-w-full h-auto w-full"
+                width={500}
+                height={500}
+              />
+            </div>
           </div>
-          <div className="flex justify-center md:justify-end">
-            <Image
-              src="/resonance-og-image.png"
-              alt="Resonance App Screenshot"
-              className="rounded-lg shadow-lg max-w-full h-auto w-full"
-              width={500}
-              height={500}
-            />
-          </div>
-        </div>
+        </Link>
       </div>
       <Footer />
     </>
