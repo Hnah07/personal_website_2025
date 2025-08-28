@@ -35,9 +35,9 @@ const Header = () => {
 
   const navItems = [
     { name: "Portfolio", href: "#portfolioSection", isPortfolio: true },
-    { name: "Blog", href: "/blog", isPortfolio: false },
-    { name: "About", href: "/about", isPortfolio: false },
-    { name: "Contact", href: "/contact", isPortfolio: false },
+    // { name: "Blog", href: "/blog", isPortfolio: false },
+    { name: "About", href: "/aboutMe", isPortfolio: false },
+    { name: "Contact", href: "/#follow", isPortfolio: false },
   ];
 
   return (

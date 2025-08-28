@@ -15,16 +15,15 @@ const AboutMeSection = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex flex-col items-center max-w-3xl"
+          className="flex flex-col max-w-3xl flex-1"
           id="aboutme"
         >
           <h2>About me</h2>
           <p className="pt-8">
-            I&apos;m Hannah Casier, a{" "}
-            <Highlight index={0}>student Full Stack Developer</Highlight> at
-            Syntra AB with a deep passion for{" "}
-            <Highlight index={1}>technology and design</Highlight>. I would love
-            to create
+            I&apos;m Hannah Casier, a recently graduated{" "}
+            <Highlight index={0}>Full Stack Developer</Highlight> with a deep
+            passion for <Highlight index={1}>technology and design</Highlight>.
+            I would love to create
             <Highlight index={2}>
               beautiful and accessible websites
             </Highlight>{" "}
@@ -33,7 +32,7 @@ const AboutMeSection = () => {
           <p>
             Beyond coding, I&apos;m a{" "}
             <Highlight index={3}>casual gamer</Highlight> who enjoys playing on
-            her Nintendo Switch on the go or at home, an{" "}
+            her retro handheld on the go or at home, an{" "}
             <Highlight index={4}>avid photography enthusiast</Highlight>
             capturing life&apos;s moments through my lens, a{" "}
             <Highlight index={5}>craft beer aficionado</Highlight>
@@ -42,17 +41,18 @@ const AboutMeSection = () => {
             <Highlight index={6}>competitive table tennis</Highlight>, enjoying
             the challenge and excitement of the game.
           </p>
-          <p className="pb-8">
-            Currently, I&apos;m on an exciting journey of making a{" "}
-            <Highlight index={7}>career switch</Highlight>, driven by my love
-            for creativity, technology, and meaningful digital solutions.
+          <p>
+            Currently, I&apos;m looking for my first job as a{" "}
+            <Highlight index={7}>Full Stack Developer</Highlight>.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <PrimaryButton href="/cv_hannah_casier.pdf">View cv</PrimaryButton>
-            <SecondaryButton href="/about">More about me...</SecondaryButton>
+            <SecondaryButton href="/aboutMe">More about me...</SecondaryButton>
           </div>
         </motion.div>
-        <SkillsSection />
+        <div className="flex-1">
+          <SkillsSection />
+        </div>
       </div>
     </section>
   );

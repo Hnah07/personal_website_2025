@@ -58,6 +58,7 @@ const SkillsSection = () => {
 
   return (
     <motion.div
+      id="SkillsSection"
       initial={{ opacity: 0, x: 50 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-100px" }}
