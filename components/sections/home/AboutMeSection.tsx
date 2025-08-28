@@ -15,7 +15,7 @@ const AboutMeSection = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex flex-col max-w-3xl"
+          className="flex flex-col max-w-3xl flex-1"
           id="aboutme"
         >
           <h2>About me</h2>
@@ -50,7 +50,9 @@ const AboutMeSection = () => {
             <SecondaryButton href="/aboutMe">More about me...</SecondaryButton>
           </div>
         </motion.div>
-        <SkillsSection />
+        <div className="flex-1">
+          <SkillsSection />
+        </div>
       </div>
     </section>
   );
