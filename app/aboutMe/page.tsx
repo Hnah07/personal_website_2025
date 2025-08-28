@@ -21,7 +21,7 @@ export default function AboutMe() {
           enjoying some retro gaming, capturing moments through photography, or
           exploring the world of craft beer.
         </p>
-        <h3 className="pt-10">My Professional Background</h3>
+        <h2 className="pt-10">My Professional Background</h2>
         <p>
           Technology has always been present in my life. I was that friend who
           got the first iPhone, who loved tinkering with Photoshop on my first
@@ -66,6 +66,44 @@ export default function AboutMe() {
             skills
           </Link>
           .
+        </p>
+        <h2 className="pt-10 pb-5">Beyond Coding</h2>
+        <h3>Casual Gamer</h3>
+        <p>
+          I love diving back into nostalgic games on my Anbernic RG353V with
+          titles like Earthbound, Pokémon, or Castlevania.
+        </p>
+        <h3>Photography</h3>
+        <p>
+          With my Fujifilm X-T5 (and my trusty 35mm lens), I enjoy capturing
+          moments that combine atmosphere and detail. I often shoot for{" "}
+          <Link href="https://beersbites.brussels" className="underline">
+            beersbites.brussels
+          </Link>
+          , a blog I run with a friend about craft beer and food in Brussels. On
+          trips, I switch to my 23mm to catch a wider perspective of the places
+          I explore. You can find some of my photos at{" "}
+          <Link
+            href="https://portfolio.pixelfed.social/HannahCasier"
+            className="underline"
+          >
+            my portfolio on Pixelfed
+          </Link>
+          .
+        </p>
+        <h3>Craft Beer</h3>
+        <p>
+          I&apos;ve checked in more than 8,000 unique beers on Untappd. What
+          fascinates me is how beer can hold so many flavors, stories, and
+          traditions in a single glass. Tasting together with friends,
+          discussing what we discover. That&apos;s where the fun really is.
+        </p>
+        <h3>Table Tennis</h3>
+        <p>
+          I play competitively at KTTC Lint. Table tennis is both fast-paced and
+          strategic, and for me, it&apos;s the perfect mix of challenge, focus,
+          and discipline. Plus, it keeps me moving after long hours behind the
+          screen.
         </p>
       </div>
       <Footer />
