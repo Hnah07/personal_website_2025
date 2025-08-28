@@ -57,8 +57,15 @@ export default function AboutMe() {
           </b>
         </p>
         <p>
-          Have a look at my <Link href="/webProjects">projects</Link> or my{" "}
-          <Link href="/#SkillsSection">skills</Link>.
+          Have a look at my{" "}
+          <Link href="/webProjects" className="underline">
+            projects
+          </Link>{" "}
+          or my{" "}
+          <Link href="/#SkillsSection" className="underline">
+            skills
+          </Link>
+          .
         </p>
       </div>
       <Footer />
