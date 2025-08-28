@@ -43,6 +43,11 @@ const Hero = () => {
       <p className="animate-fade-in-left m-8 text-xl md:text-xl text-brilliant-rose font-extralight">
         📍 Mortsel, Belgium
       </p>
+
+      {/* Scroll Indicator Arrow */}
+      <div className="absolute bottom-20 left-0 right-0 flex justify-center animate-bounce [animation-delay:2s] [animation-fill-mode:both]">
+        <div className="w-6 h-6 border-r-2 border-b-2 border-black/60 dark:border-black/40 rotate-45 transform origin-center"></div>
+      </div>
     </div>
   );
 };
