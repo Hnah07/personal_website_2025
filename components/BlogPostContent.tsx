@@ -18,7 +18,7 @@ interface BlogPost {
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
 
 export default function BlogPostContent({ postId }: { postId: string }) {
@@ -65,7 +65,7 @@ export default function BlogPostContent({ postId }: { postId: string }) {
       setPost({ ...post, image_url: imageUrl });
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to upload image"
+        error instanceof Error ? error.message : "Failed to upload image",
       );
     } finally {
       setUploading(false);
