@@ -17,7 +17,7 @@ const pirata = Pirata_One({
 
 export const metadata: Metadata = {
   title: "Hannah Casier",
-  description: "Full Stack Developer Student",
+  description: "Full Stack Developer",
 };
 
 export default function RootLayout({
