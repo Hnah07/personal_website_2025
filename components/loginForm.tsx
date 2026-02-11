@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+// import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/auth-actions";
 
-export function LoginForm() {
+import { useRouter } from "next/navigation";
+interface LoginFormProps {
+  redirectTo?: string;
+}
+
+export function LoginForm({ redirectTo = "/" }: LoginFormProps) {
+  const router = useRouter();
+  const handleSubmit = async (formData: FormData) => {
+    const result = await login(formData);
+
+    if (result?.success || !result?.error) {
+      router.push(redirectTo);
+    }
+  };
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -22,7 +36,7 @@ export function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form action="">
+        <form action={handleSubmit}>
           <div className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -37,16 +51,16 @@ export function LoginForm() {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
-                <Link
+                {/* <Link
                   href="#"
                   className="ml-auto inline-block text-sm underline"
                 >
                   Forgot your password?
-                </Link>
+                </Link> */}
               </div>
               <Input id="password" name="password" type="password" required />
             </div>
-            <Button type="submit" formAction={login} className="w-full">
+            <Button type="submit" className="w-full">
               Login
             </Button>
           </div>
