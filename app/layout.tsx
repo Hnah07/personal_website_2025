@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins, Pirata_One } from "next/font/google";
 import "./globals.css";
-import ThemeContext from "./context/ThemeContext";
+// import ThemeContext from "./context/ThemeContext";
+import { ThemeProvider } from "next-themes";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -17,7 +18,7 @@ const pirata = Pirata_One({
 
 export const metadata: Metadata = {
   title: "Hannah Casier",
-  description: "Full Stack Developer Student",
+  description: "Full Stack Developer",
 };
 
 export default function RootLayout({
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${pirata.variable} font-poppins antialiased`}
       >
-        <ThemeContext>{children}</ThemeContext>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
