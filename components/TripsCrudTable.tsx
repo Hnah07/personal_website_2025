@@ -6,8 +6,9 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { Trip } from "@/types/index";
 
-const columns: ColumnDef<any>[] = [
+const columns: ColumnDef<Trip>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -30,7 +31,7 @@ const columns: ColumnDef<any>[] = [
   },
 ];
 
-export default function TripsCrudTable({ data }: { data: any[] }) {
+export default function TripsCrudTable({ data }: { data: Trip[] }) {
   const table = useReactTable({
     data,
     columns,
