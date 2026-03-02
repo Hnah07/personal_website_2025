@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import TripsCrudTable from "@/components/TripsCrudTable";
 
 export default async function CRUDPage() {
   const supabase = await createClient();
@@ -12,16 +13,10 @@ export default async function CRUDPage() {
     return <p>Something went wrong...</p>;
   }
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="pt-20">Trips Admin Page</h1>
-        <ul>
-          {data.map((trip) => (
-            <li key={trip.id}>
-              {trip.title} - {trip.year}
-            </li>
-          ))}
-        </ul>
+        <h1 className="pt-20 mb-8">Trips Admin Page</h1>
+        <TripsCrudTable data={data} />
       </div>
     </main>
   );
