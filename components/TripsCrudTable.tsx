@@ -37,7 +37,10 @@ const columns: ColumnDef<Trip>[] = [
   },
   {
     accessorKey: "published",
-    header: "Published",
+    header: () => <div className="text-center">Published</div>,
+    cell: ({ getValue }) => (
+      <div className="text-center">{getValue() ? "✅" : "❌"}</div>
+    ),
   },
 ];
 
