@@ -1,10 +1,18 @@
 "use client";
 
+import { Trip } from "@/types/index";
+
+import * as React from "react";
+
+import { ArrowUpDown } from "lucide-react";
+
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -15,8 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { Trip } from "@/types/index";
+import { Button } from "./ui/button";
 
 const columns: ColumnDef<Trip>[] = [
   {
@@ -33,7 +40,17 @@ const columns: ColumnDef<Trip>[] = [
   },
   {
     accessorKey: "year",
-    header: "Year",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Year
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "published",
@@ -45,10 +62,16 @@ const columns: ColumnDef<Trip>[] = [
 ];
 
 export default function TripsCrudTable({ data }: { data: Trip[] }) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
   });
 
   return (
