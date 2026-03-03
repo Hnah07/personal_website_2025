@@ -6,6 +6,8 @@ import * as React from "react";
 
 import { ArrowUpDown } from "lucide-react";
 
+import formatDate from "@/utils/formatDate";
+
 import {
   ColumnDef,
   flexRender,
@@ -26,9 +28,46 @@ import {
 import { Button } from "./ui/button";
 
 const columns: ColumnDef<Trip>[] = [
+  // {
+  //   accessorKey: "id",
+  //   header: "ID",
+  // },
   {
-    accessorKey: "id",
-    header: "ID",
+    accessorKey: "published",
+    header: () => <div className="text-center">Published</div>,
+    cell: ({ getValue }) => (
+      <div className="text-center">{getValue() ? "✅" : "❌"}</div>
+    ),
+  },
+  {
+    accessorKey: "published_at",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Published At
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ getValue }) => formatDate(getValue<string>()),
+  },
+  {
+    accessorKey: "created_at",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ getValue }) => formatDate(getValue<string>()),
   },
   {
     accessorKey: "title",
@@ -51,13 +90,6 @@ const columns: ColumnDef<Trip>[] = [
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "published",
-    header: () => <div className="text-center">Published</div>,
-    cell: ({ getValue }) => (
-      <div className="text-center">{getValue() ? "✅" : "❌"}</div>
-    ),
   },
 ];
 
