@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import TripsCrudTable from "@/components/TripsCrudTable";
+import TripsCrudTable from "@/components/admin/TripsCrudTable";
 import Header from "@/components/layout/Header";
 import Link from "next/link";
 
