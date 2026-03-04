@@ -7,15 +7,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
+// import { type DateRange } from "react-day-picker";
 import { CalendarIcon } from "lucide-react";
-import { type DateRange } from "react-day-picker";
+import { DateRange } from "react-day-picker";
 
-export default function DatePickerRange() {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(new Date().getFullYear(), 0, 20),
-    to: addDays(new Date(new Date().getFullYear(), 0, 20), 20),
-  });
+export default function DatePickerRange({
+  date,
+  onDateChange,
+}: {
+  date: DateRange | undefined;
+  onDateChange: (date: DateRange | undefined) => void;
+}) {
+  // const [date, setDate] = React.useState<DateRange | undefined>({
+  //   from: new Date(new Date().getFullYear(), 0, 20),
+  //   to: addDays(new Date(new Date().getFullYear(), 0, 20), 20),
+  // });
 
   return (
     <div className="w-full px-3 mb-6 md:mb-0 gap-2 flex flex-col">
@@ -47,7 +54,7 @@ export default function DatePickerRange() {
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={onDateChange}
             numberOfMonths={2}
           />
         </PopoverContent>
