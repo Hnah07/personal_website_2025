@@ -15,6 +15,9 @@ export default function AddTripForm() {
             placeholder="Write here the title of your trip"
           />
         </div>
+        <div className="w-full px-3">
+          <Label htmlFor="Location">Location</Label>
+        </div>
       </div>
     </form>
   );
