@@ -8,11 +8,11 @@ import Image from "@editorjs/image";
 import Embed from "@editorjs/embed";
 import { useEffect, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
+const supabase = createClient();
 
 export default function TripContentBlocks() {
   const editorContainerRef = useRef<HTMLDivElement | null>(null); // voor de div
   const editorRef = useRef<EditorJS | null>(null); // voor Editor.js instantie
-  const supabase = createClient();
 
   useEffect(() => {
     const editor = new EditorJS({
