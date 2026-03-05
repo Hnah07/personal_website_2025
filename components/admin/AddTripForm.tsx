@@ -18,6 +18,8 @@ import countries from "country-list";
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
   const countryList = countries.getNames();
+  const [excerpt, setExcerpt] = useState("");
+
   return (
     <form className="w-full max-w-lg">
       <div className="flex flex-wrap -mx-3 mb-6 w-full gap-4">
@@ -70,11 +72,18 @@ export default function AddTripForm() {
           <Label htmlFor="excerpt">
             Small excerpt of the trip (max 160 characters)
           </Label>
-          <Textarea
-            id="excerpt"
-            placeholder="Write a small excerpt of the trip to show in the trip list"
-            maxLength={160}
-          />
+          <div className="relative">
+            <Textarea
+              id="excerpt"
+              placeholder="Write a small excerpt of the trip to show in the trip list"
+              maxLength={160}
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
+            />
+            <p className="text-sm text-muted-foreground absolute bottom-1 right-1">
+              {excerpt.length}/160
+            </p>
+          </div>
         </div>
       </div>
     </form>
