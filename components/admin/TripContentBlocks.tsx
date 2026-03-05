@@ -29,9 +29,9 @@ export default function TripContentBlocks() {
   }, []);
 
   return (
-    <div className="px-3 mb-6 md:mb-0">
+    <div className="w-full px-3 mb-6 md:mb-0">
       <h2 className="text-2xl font-bold mb-4">Trip Content</h2>
-      <div ref={editorContainerRef} />
+      <div ref={editorContainerRef} className="bg-muted" />
     </div>
   );
 }
