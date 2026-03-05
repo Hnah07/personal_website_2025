@@ -2,6 +2,13 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import DatePickerRange from "../DatePickerRange";
 import { useState } from "react";
 import { type DateRange } from "react-day-picker";
@@ -22,15 +29,24 @@ export default function AddTripForm() {
           />
         </div>
         <DatePickerRange date={date} onDateChange={setDate} />
-      </div>
-      <div className="w-full px-3 mb-6 md:mb-0">
-        <Label htmlFor="Country">Country</Label>
-        <Input
-          id="Country"
-          type="dropdown"
-          placeholder="Write here the country of your trip"
-          value={countryList}
-        />
+        <div className="w-full px-3 mb-6 md:mb-0">
+          <Label htmlFor="Country">Country</Label>
+          <Select>
+            <SelectTrigger className="w-full" id="Country">
+              <SelectValue placeholder="Select a country" />
+            </SelectTrigger>
+            <SelectContent>
+              {countryList.map((country) => (
+                <SelectItem key={country} value={country}>
+                  {country}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label htmlFor="Location">Description</Label>
+        </div>
       </div>
     </form>
   );

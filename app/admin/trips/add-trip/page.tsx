@@ -10,8 +10,8 @@ export default function AddTripPage() {
     <main className="flex flex-col items-center">
       <Header />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="pt-20">Add Trip Page</h1>
-        <p>Welcome to the Add Trip page!</p>
+        <h1 className="pt-20">Add a Trip</h1>
+        <p>Use this form to add a new trip to your collection.</p>
         <AddTripForm />
       </div>
     </main>
