@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import DatePickerRange from "../DatePickerRange";
 import { useState } from "react";
 import { type DateRange } from "react-day-picker";
@@ -44,8 +45,36 @@ export default function AddTripForm() {
             </SelectContent>
           </Select>
         </div>
-        <div>
-          <Label htmlFor="Location">Description</Label>
+        <div className="w-full px-3 mb-6 md:mb-0">
+          <Label htmlFor="location-type">Location Type</Label>
+          <Select>
+            <SelectTrigger className="w-full" id="location-type">
+              <SelectValue placeholder="Select a location type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="city">City</SelectItem>
+              <SelectItem value="region">Region</SelectItem>
+              <SelectItem value="country">Country</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="w-full px-3 mb-6 md:mb-0">
+          <Label htmlFor="location-name">Name of the location</Label>
+          <Input
+            id="location-name"
+            type="text"
+            placeholder="Enter the name of the location"
+          />
+        </div>
+        <div className="w-full px-3 mb-6 md:mb-0">
+          <Label htmlFor="excerpt">
+            Small excerpt of the trip (max 160 characters)
+          </Label>
+          <Textarea
+            id="excerpt"
+            placeholder="Write a small excerpt of the trip to show in the trip list"
+            maxLength={160}
+          />
         </div>
       </div>
     </form>
