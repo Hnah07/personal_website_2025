@@ -13,25 +13,25 @@ export default function TripContentBlocks() {
   const editorRef = useRef<EditorJS | null>(null); // voor Editor.js instantie
 
   useEffect(() => {
-    editorRef.current = new EditorJS({
-      holder: editorContainerRef.current!, // koppel aan de div
-      tools: {
-        header: Header,
-        list: List,
-        image: Image,
-        embed: Embed,
-      },
+    const editor = new EditorJS({
+      holder: editorContainerRef.current!,
+      tools: { header: Header, list: List, image: Image, embed: Embed },
     });
+
+    editorRef.current = editor;
+
     return () => {
-      editorRef.current?.destroy();
-      editorRef.current = null;
+      editor.isReady.then(() => {
+        editor.destroy();
+        editorRef.current = null;
+      });
     };
   }, []);
 
   return (
     <div className="w-full px-3 mb-6 md:mb-0">
       <h2 className="text-2xl font-bold mb-4">Trip Content</h2>
-      <div ref={editorContainerRef} className="bg-muted" />
+      <div ref={editorContainerRef} className="bg-muted min-h-[300px]"></div>
     </div>
   );
 }

@@ -18,6 +18,10 @@ import countries from "country-list";
 import Dropzone from "./Dropzone";
 import TripContentBlocks from "./TripContentBlocks";
 
+// const TripContentBlocks = dynamic(() => import("./TripContentBlocks"), {
+//   ssr: false,
+// });
+
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
   const countryList = countries.getNames();
