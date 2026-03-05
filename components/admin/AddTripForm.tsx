@@ -16,6 +16,7 @@ import { useState } from "react";
 import { type DateRange } from "react-day-picker";
 import countries from "country-list";
 import Dropzone from "./Dropzone";
+import TripContentBlocks from "./TripContentBlocks";
 
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
@@ -97,7 +98,7 @@ export default function AddTripForm() {
             }}
           />
         </div>
-        <div className="md:mb-0">
+        <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="is-published">Publish this trip?</Label>
           <div className="flex items-center space-x-2">
             <Checkbox
@@ -108,6 +109,7 @@ export default function AddTripForm() {
             <p className="text-sm">Yes, publish this trip</p>
           </div>
         </div>
+        <TripContentBlocks />
       </div>
     </form>
   );
