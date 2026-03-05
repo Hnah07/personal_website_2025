@@ -34,10 +34,15 @@ export default function Dropzone({
   ));
 
   return (
-    <section className="container">
-      <div {...getRootProps({ className: "dropzone" })}>
+    <section className="border-dashed border-2 rounded-lg p-8 text-center">
+      <div
+        {...getRootProps({ className: "dropzone" })}
+        className="cursor-pointer"
+      >
         <input {...getInputProps()} />
-        <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
+        <p>
+          Drag &apos;n&apos; drop files here, or <em>click</em> to select files
+        </p>
       </div>
       <aside>
         <h4>Files</h4>

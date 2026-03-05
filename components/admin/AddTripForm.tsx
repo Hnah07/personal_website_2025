@@ -14,6 +14,7 @@ import DatePickerRange from "../DatePickerRange";
 import { useState } from "react";
 import { type DateRange } from "react-day-picker";
 import countries from "country-list";
+import Dropzone from "./Dropzone";
 
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
@@ -21,8 +22,8 @@ export default function AddTripForm() {
   const [excerpt, setExcerpt] = useState("");
 
   return (
-    <form className="w-full max-w-lg">
-      <div className="flex flex-wrap -mx-3 mb-6 w-full gap-4">
+    <form className="w-full">
+      <div className="flex flex-col -mx-3 mb-6 w-full gap-4">
         <div className="w-full px-3 mb-6 md:mb-0">
           <Label htmlFor="Title">Title</Label>
           <Input
@@ -84,6 +85,15 @@ export default function AddTripForm() {
               {excerpt.length}/160
             </p>
           </div>
+        </div>
+        <div className="w-full px-3 mb-6 md:mb-0">
+          <Label>Upload hero image</Label>
+          <Dropzone
+            accept={{ "image/*": [] }}
+            onDrop={(acceptedFiles) => {
+              console.log(acceptedFiles);
+            }}
+          />
         </div>
       </div>
     </form>
