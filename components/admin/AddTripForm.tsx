@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import DatePickerRange from "../DatePickerRange";
 import { useState } from "react";
 import { type DateRange } from "react-day-picker";
@@ -20,6 +21,7 @@ export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
   const countryList = countries.getNames();
   const [excerpt, setExcerpt] = useState("");
+  const [published, setPublished] = useState(false);
 
   return (
     <form className="w-full">
@@ -48,7 +50,7 @@ export default function AddTripForm() {
             </SelectContent>
           </Select>
         </div>
-        <div className="w-full px-3 mb-6 md:mb-0">
+        <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="location-type">Location Type</Label>
           <Select>
             <SelectTrigger className="w-full" id="location-type">
@@ -61,7 +63,7 @@ export default function AddTripForm() {
             </SelectContent>
           </Select>
         </div>
-        <div className="w-full px-3 mb-6 md:mb-0">
+        <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="location-name">Name of the location</Label>
           <Input
             id="location-name"
@@ -69,7 +71,7 @@ export default function AddTripForm() {
             placeholder="Enter the name of the location"
           />
         </div>
-        <div className="w-full px-3 mb-6 md:mb-0">
+        <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="excerpt">
             Small excerpt of the trip (max 160 characters)
           </Label>
@@ -86,7 +88,7 @@ export default function AddTripForm() {
             </p>
           </div>
         </div>
-        <div className="w-full px-3 mb-6 md:mb-0">
+        <div className="px-3 mb-6 md:mb-0">
           <Label>Upload hero image</Label>
           <Dropzone
             accept={{ "image/*": [] }}
@@ -94,6 +96,17 @@ export default function AddTripForm() {
               console.log(acceptedFiles);
             }}
           />
+        </div>
+        <div className="md:mb-0">
+          <Label htmlFor="is-published">Publish this trip?</Label>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="is-published"
+              checked={published}
+              onCheckedChange={(checked) => setPublished(checked === true)}
+            />
+            <p className="text-sm">Yes, publish this trip</p>
+          </div>
         </div>
       </div>
     </form>
