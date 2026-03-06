@@ -10,7 +10,7 @@ type Trip = {
   end_date: Date;
   location_type: string;
   location_name: string;
-  country: string;
+  country: string[];
   excerpt: string;
   hero_image: string;
   published: boolean;
@@ -22,7 +22,7 @@ export type { Trip };
 
 type TripFormData = {
   title: string;
-  country: string;
+  country: string[];
   location_type: string;
   location_name: string;
   start_date: Date;
