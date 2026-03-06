@@ -21,6 +21,7 @@ import Dropzone from "./Dropzone";
 import dynamic from "next/dynamic";
 import { useForm, Controller } from "react-hook-form";
 import { TripFormData } from "@/types";
+import { OutputData } from "@editorjs/editorjs";
 
 const TripContentBlocks = dynamic(() => import("./TripContentBlocks"), {
   ssr: false,
@@ -32,6 +33,7 @@ export default function AddTripForm() {
   // const [excerpt, setExcerpt] = useState("");
   // const [published, setPublished] = useState(false);
   const [heroImage, setHeroImage] = useState<File | null>(null);
+  const [tripContent, setTripContent] = useState<OutputData | null>(null);
 
   const {
     register,
@@ -51,6 +53,8 @@ export default function AddTripForm() {
       ...data,
       start_date: date?.from,
       end_date: date?.to,
+      trip_content: tripContent,
+      hero_image: heroImage,
     };
     console.log("Form data:", formData);
   };
@@ -165,9 +169,7 @@ export default function AddTripForm() {
             <p className="text-sm">Yes, publish this trip</p>
           </div>
         </div>
-        <TripContentBlocks
-          onContentChange={(content) => setTripContent(content)}
-        />
+        <TripContentBlocks onContentChange={setTripContent} />
       </div>
       <Button type="submit">Save Trip</Button>
     </form>
