@@ -43,6 +43,7 @@ export default function AddTripForm() {
   } = useForm<TripFormData>({
     defaultValues: {
       published: false,
+      country: [{ value: "" }],
     },
   });
 
@@ -127,13 +128,18 @@ export default function AddTripForm() {
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col -mx-3 mb-6 w-full gap-4">
         <div className="w-full px-3 mb-6 md:mb-0">
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">Title*</Label>
           <Input
             id="title"
             type="text"
             placeholder="Write here the title of your trip"
-            {...register("title")}
+            {...register("title", {
+              required: "Title is required",
+            })}
           />
+          {errors.title && (
+            <p className="text-sm text-red-500">{errors.title.message}</p>
+          )}
         </div>
         <DatePickerRange date={date} onDateChange={setDate} />
         <div className="w-full px-3 mb-6 md:mb-0">
