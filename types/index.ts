@@ -22,7 +22,7 @@ export type { Trip };
 
 type TripFormData = {
   title: string;
-  country: string[];
+  country: { value: string }[];
   location_type: string;
   location_name: string;
   start_date: Date;

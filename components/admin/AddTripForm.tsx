@@ -18,7 +18,7 @@ import { type DateRange } from "react-day-picker";
 import countries from "country-list";
 import Dropzone from "./Dropzone";
 import TripContentBlocks from "./TripContentBlocks";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 import slugify from "slugify";
@@ -47,6 +47,11 @@ export default function AddTripForm() {
   });
 
   const excerptValue = watch("excerpt");
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "country",
+  });
 
   const onSubmit = async (data: TripFormData) => {
     const slug = slugify(data.title, { lower: true, strict: true });
@@ -132,25 +137,45 @@ export default function AddTripForm() {
         </div>
         <DatePickerRange date={date} onDateChange={setDate} />
         <div className="w-full px-3 mb-6 md:mb-0">
-          <Label htmlFor="country">Country</Label>
-          <Controller
-            control={control}
-            name="country"
-            render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full" id="country">
-                  <SelectValue placeholder="Select a country" />
-                </SelectTrigger>
-                <SelectContent>
-                  {countryList.map((country) => (
-                    <SelectItem key={country} value={country}>
-                      {country}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          />
+          <Label htmlFor="country">Country*</Label>
+          {fields.map((field, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const fieldName = `country.${index}.value` as any;
+            return (
+              <div key={field.id} className="flex items-center space-x-2 mb-2">
+                <Controller
+                  control={control}
+                  name={fieldName}
+                  rules={{ required: "Country is required" }}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full" id="country">
+                        <SelectValue placeholder="Select a country" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {countryList.map((country) => (
+                          <SelectItem key={country} value={country}>
+                            {country}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <Button type="button" onClick={() => remove(index)}>
+                  -
+                </Button>
+                {errors.country?.[index]?.value && (
+                  <p className="text-sm text-red-500">
+                    {errors.country[index].value.message}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+          <Button type="button" onClick={() => append({ value: "" })}>
+            + Add Country
+          </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="location-type">Location Type</Label>
