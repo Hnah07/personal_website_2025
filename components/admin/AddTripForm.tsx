@@ -18,14 +18,10 @@ import { type DateRange } from "react-day-picker";
 import countries from "country-list";
 import Dropzone from "./Dropzone";
 import TripContentBlocks from "./TripContentBlocks";
-// import dynamic from "next/dynamic";
 import { useForm, Controller } from "react-hook-form";
 import { TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
-
-// const TripContentBlocks = dynamic(() => import("./TripContentBlocks"), {
-//   ssr: false,
-// });
+import slugify from "slugify";
 
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
@@ -48,14 +44,24 @@ export default function AddTripForm() {
   });
 
   const excerptValue = watch("excerpt");
+
   const onSubmit = (data: TripFormData) => {
+    const slug = slugify(data.title, { lower: true, strict: true });
+    const year = date?.from?.getFullYear();
+    const month = date?.from ? date.from.getMonth() + 1 : undefined;
     const formData = {
       ...data,
       start_date: date?.from,
       end_date: date?.to,
       trip_content: tripContent,
       hero_image: heroImage,
+      slug: slug,
+      year: year,
+      month: month,
     };
+    console.log("Generated slug:", slug);
+    console.log("Extracted year:", year);
+    console.log("Extracted month:", month);
     console.log("Form data:", formData);
   };
 
