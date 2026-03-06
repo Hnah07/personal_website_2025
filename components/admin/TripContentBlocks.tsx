@@ -8,15 +8,25 @@ import Image from "@editorjs/image";
 import Embed from "@editorjs/embed";
 import { useEffect, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { OutputData } from "@editorjs/editorjs";
+
 const supabase = createClient();
 
-export default function TripContentBlocks() {
+export default function TripContentBlocks({
+  onContentChange,
+}: {
+  onContentChange: (content: OutputData) => void;
+}) {
   const editorContainerRef = useRef<HTMLDivElement | null>(null); // voor de div
   const editorRef = useRef<EditorJS | null>(null); // voor Editor.js instantie
 
   useEffect(() => {
     const editor = new EditorJS({
       holder: editorContainerRef.current!,
+      onChange: async () => {
+        const content = await editor.save();
+        onContentChange(content);
+      },
       tools: {
         header: Header,
         list: List,

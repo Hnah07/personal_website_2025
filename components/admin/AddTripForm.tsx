@@ -39,12 +39,24 @@ export default function AddTripForm() {
     watch,
     control,
     formState: { errors },
-  } = useForm<TripFormData>();
+  } = useForm<TripFormData>({
+    defaultValues: {
+      published: false,
+    },
+  });
 
   const excerptValue = watch("excerpt");
+  const onSubmit = (data: TripFormData) => {
+    const formData = {
+      ...data,
+      start_date: date?.from,
+      end_date: date?.to,
+    };
+    console.log("Form data:", formData);
+  };
 
   return (
-    <form className="w-full">
+    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col -mx-3 mb-6 w-full gap-4">
         <div className="w-full px-3 mb-6 md:mb-0">
           <Label htmlFor="title">Title</Label>
@@ -146,17 +158,18 @@ export default function AddTripForm() {
                   // onCheckedChange={(checked) => setPublished(checked === true)}
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  defaultChecked={false}
                 />
               )}
             />
             <p className="text-sm">Yes, publish this trip</p>
           </div>
         </div>
-        <TripContentBlocks />
+        <TripContentBlocks
+          onContentChange={(content) => setTripContent(content)}
+        />
       </div>
-      <Button type="submit" className="ml-3">
-        Save Trip
-      </Button>
+      <Button type="submit">Save Trip</Button>
     </form>
   );
 }
