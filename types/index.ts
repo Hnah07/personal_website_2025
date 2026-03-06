@@ -1,3 +1,5 @@
+import type { OutputData } from "@editorjs/editorjs";
+
 type Trip = {
   id: string;
   title: string;
@@ -16,5 +18,18 @@ type Trip = {
   created_at: Date;
   updated_at: Date;
 };
-
 export type { Trip };
+
+type TripFormData = {
+  title: string;
+  country: string;
+  location_type: string;
+  location_name: string;
+  start_date: Date;
+  end_date?: Date;
+  excerpt?: string;
+  published: boolean;
+  hero_image?: File | null;
+  trip_content?: OutputData;
+};
+export type { TripFormData };

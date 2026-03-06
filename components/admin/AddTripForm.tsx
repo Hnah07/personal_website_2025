@@ -18,6 +18,8 @@ import countries from "country-list";
 import Dropzone from "./Dropzone";
 // import TripContentBlocks from "./TripContentBlocks";
 import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+import { TripFormData } from "@/types";
 
 const TripContentBlocks = dynamic(() => import("./TripContentBlocks"), {
   ssr: false,
@@ -28,9 +30,15 @@ export default function AddTripForm() {
   const countryList = countries.getNames();
   const [excerpt, setExcerpt] = useState("");
   const [published, setPublished] = useState(false);
+  const [heroImage, setHeroImage] = useState<File | null>(null);
 
   return (
-    <form className="w-full">
+    <form
+      className="w-full"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <div className="flex flex-col -mx-3 mb-6 w-full gap-4">
         <div className="w-full px-3 mb-6 md:mb-0">
           <Label htmlFor="Title">Title</Label>
@@ -99,6 +107,9 @@ export default function AddTripForm() {
           <Dropzone
             accept={{ "image/*": [] }}
             onDrop={(acceptedFiles) => {
+              if (acceptedFiles.length > 0) {
+                setHeroImage(acceptedFiles[0]);
+              }
               console.log(acceptedFiles);
             }}
           />
