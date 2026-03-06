@@ -1,14 +1,15 @@
 "use client";
 
 import EditorJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import Image from "@editorjs/image";
-// @ts-expect-error no types available for this package
-import Embed from "@editorjs/embed";
+// import Header from "@editorjs/header";
+// import List from "@editorjs/list";
+// import Image from "@editorjs/image";
+// // @ts-expect-error no types available for this package
+// import Embed from "@editorjs/embed";
 import { useEffect, useRef } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { OutputData } from "@editorjs/editorjs";
+// import { init } from "next/dist/compiled/webpack/webpack";
 
 const supabase = createClient();
 
@@ -21,55 +22,64 @@ export default function TripContentBlocks({
   const editorRef = useRef<EditorJS | null>(null); // voor Editor.js instantie
 
   useEffect(() => {
-    const editor = new EditorJS({
-      holder: editorContainerRef.current!,
-      onChange: async () => {
-        const content = await editor.save();
-        onContentChange(content);
-      },
-      tools: {
-        header: Header,
-        list: List,
-        image: {
-          class: Image,
-          config: {
-            uploader: {
-              uploadByFile: async (file: File) => {
-                const { data, error } = await supabase.storage
-                  .from("trip-images")
-                  .upload(`public/${file.name}`, file);
+    const initEditor = async () => {
+      const EditorJS = (await import("@editorjs/editorjs")).default;
+      const Header = (await import("@editorjs/header")).default;
+      const List = (await import("@editorjs/list")).default;
+      const Image = (await import("@editorjs/image")).default;
+      // @ts-expect-error no types available for this package
+      const Embed = (await import("@editorjs/embed")).default;
+      const editor = new EditorJS({
+        holder: editorContainerRef.current!,
+        onChange: async () => {
+          const content = await editor.save();
+          onContentChange(content);
+        },
+        tools: {
+          header: Header,
+          list: List,
+          image: {
+            class: Image,
+            config: {
+              uploader: {
+                uploadByFile: async (file: File) => {
+                  const { data, error } = await supabase.storage
+                    .from("trip-images")
+                    .upload(`public/${file.name}`, file);
 
-                if (error) {
-                  console.error("Error uploading image:", error);
-                  return { success: 0 };
-                }
+                  if (error) {
+                    console.error("Error uploading image:", error);
+                    return { success: 0 };
+                  }
 
-                const { data: urlData } = supabase.storage
-                  .from("trip-images")
-                  .getPublicUrl(data.path);
+                  const { data: urlData } = supabase.storage
+                    .from("trip-images")
+                    .getPublicUrl(data.path);
 
-                return {
-                  success: 1,
-                  file: {
-                    url: urlData.publicUrl,
-                  },
-                };
+                  return {
+                    success: 1,
+                    file: {
+                      url: urlData.publicUrl,
+                    },
+                  };
+                },
               },
             },
           },
+          embed: Embed,
         },
-        embed: Embed,
-      },
-    });
-
-    editorRef.current = editor;
-
-    return () => {
-      editor.isReady.then(() => {
-        editor.destroy();
-        editorRef.current = null;
       });
+
+      editorRef.current = editor;
+
+      return () => {
+        editor.isReady.then(() => {
+          editor.destroy();
+          editorRef.current = null;
+        });
+      };
     };
+    initEditor();
   }, []);
 
   return (

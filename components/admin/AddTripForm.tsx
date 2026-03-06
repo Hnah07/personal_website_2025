@@ -17,15 +17,15 @@ import { useState } from "react";
 import { type DateRange } from "react-day-picker";
 import countries from "country-list";
 import Dropzone from "./Dropzone";
-// import TripContentBlocks from "./TripContentBlocks";
-import dynamic from "next/dynamic";
+import TripContentBlocks from "./TripContentBlocks";
+// import dynamic from "next/dynamic";
 import { useForm, Controller } from "react-hook-form";
 import { TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 
-const TripContentBlocks = dynamic(() => import("./TripContentBlocks"), {
-  ssr: false,
-});
+// const TripContentBlocks = dynamic(() => import("./TripContentBlocks"), {
+//   ssr: false,
+// });
 
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
