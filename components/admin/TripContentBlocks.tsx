@@ -29,6 +29,7 @@ export default function TripContentBlocks({
       const Image = (await import("@editorjs/image")).default;
       // @ts-expect-error no types available for this package
       const Embed = (await import("@editorjs/embed")).default;
+
       const editor = new EditorJS({
         holder: editorContainerRef.current!,
         onChange: async () => {
@@ -43,9 +44,10 @@ export default function TripContentBlocks({
             config: {
               uploader: {
                 uploadByFile: async (file: File) => {
+                  const fileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
                   const { data, error } = await supabase.storage
                     .from("trip-images")
-                    .upload(`public/${file.name}`, file);
+                    .upload(`public/${fileName}`, file);
 
                   if (error) {
                     console.error("Error uploading image:", error);

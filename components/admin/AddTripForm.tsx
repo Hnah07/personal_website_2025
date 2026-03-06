@@ -89,6 +89,33 @@ export default function AddTripForm() {
       console.error("Error inserting trip:", error);
       return;
     }
+
+    const tripId = trip.id;
+
+    if (heroImage) {
+      const { data: imageData, error: imageError } = await supabase.storage
+        .from("trip-images")
+        .upload(`trip-${tripId}/${heroImage.name}`, heroImage);
+
+      if (imageError) {
+        console.error("Error uploading hero image:", imageError);
+        return;
+      }
+
+      const { data: urlData } = supabase.storage
+        .from("trip-images")
+        .getPublicUrl(imageData.path);
+
+      const { error: updateError } = await supabase
+        .from("trips")
+        .update({ hero_image: urlData.publicUrl })
+        .eq("id", tripId);
+
+      if (updateError) {
+        console.error("Error updating trip with hero image URL:", updateError);
+        return;
+      }
+    }
   };
 
   return (
