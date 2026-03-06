@@ -22,6 +22,9 @@ import { useForm, Controller } from "react-hook-form";
 import { TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 import slugify from "slugify";
+import { createClient } from "@/utils/supabase/client";
+
+const supabase = createClient();
 
 export default function AddTripForm() {
   const [date, setDate] = useState<DateRange | undefined>();
@@ -45,7 +48,7 @@ export default function AddTripForm() {
 
   const excerptValue = watch("excerpt");
 
-  const onSubmit = (data: TripFormData) => {
+  const onSubmit = async (data: TripFormData) => {
     const slug = slugify(data.title, { lower: true, strict: true });
     const year = date?.from?.getFullYear();
     const month = date?.from ? date.from.getMonth() + 1 : undefined;
@@ -63,6 +66,29 @@ export default function AddTripForm() {
     console.log("Extracted year:", year);
     console.log("Extracted month:", month);
     console.log("Form data:", formData);
+
+    const { data: trip, error } = await supabase
+      .from("trips")
+      .insert({
+        title: data.title,
+        slug: slug,
+        start_date: date?.from,
+        end_date: date?.to,
+        country: data.country,
+        location_type: data.location_type,
+        location_name: data.location_name,
+        excerpt: data.excerpt,
+        content: tripContent,
+        published: data.published,
+        year: year,
+        month: month,
+      })
+      .select()
+      .single();
+    if (error) {
+      console.error("Error inserting trip:", error);
+      return;
+    }
   };
 
   return (
