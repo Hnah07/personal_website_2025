@@ -54,7 +54,11 @@ export default function AddTripForm() {
 
   const excerptValue = watch("excerpt");
 
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: countryFields,
+    append: appendCountry,
+    remove: removeCountry,
+  } = useFieldArray({
     control,
     name: "country",
   });
@@ -173,7 +177,7 @@ export default function AddTripForm() {
         <DatePickerRange date={date} onDateChange={setDate} />
         <div className="w-full px-3 mb-6 md:mb-0">
           <Label htmlFor="country">Country*</Label>
-          {fields.map((field, index) => {
+          {countryFields.map((field, index) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const fieldName = `country.${index}.value` as any;
             return (
@@ -197,7 +201,7 @@ export default function AddTripForm() {
                     </Select>
                   )}
                 />
-                <Button type="button" onClick={() => remove(index)}>
+                <Button type="button" onClick={() => removeCountry(index)}>
                   -
                 </Button>
                 {errors.country?.[index]?.value && (
@@ -208,7 +212,7 @@ export default function AddTripForm() {
               </div>
             );
           })}
-          <Button type="button" onClick={() => append({ value: "" })}>
+          <Button type="button" onClick={() => appendCountry({ value: "" })}>
             + Add Country
           </Button>
         </div>
