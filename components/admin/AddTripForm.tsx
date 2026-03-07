@@ -47,6 +47,8 @@ export default function AddTripForm() {
     defaultValues: {
       published: false,
       country: [{ value: "" }],
+      location_type: [{ value: "" }],
+      location_name: [{ value: "" }],
     },
   });
 
@@ -55,6 +57,24 @@ export default function AddTripForm() {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "country",
+  });
+
+  const {
+    fields: locationTypeFields,
+    append: appendLocationType,
+    remove: removeLocationType,
+  } = useFieldArray({
+    control,
+    name: "location_type",
+  });
+
+  const {
+    fields: locationNameFields,
+    append: appendLocationName,
+    remove: removeLocationName,
+  } = useFieldArray({
+    control,
+    name: "location_name",
   });
 
   const onSubmit = async (data: TripFormData) => {
@@ -193,38 +213,75 @@ export default function AddTripForm() {
           </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
-          <Label htmlFor="location-type">Location Type*</Label>
-          <Controller
-            control={control}
-            name="location_type"
-            rules={{ required: "Location type is required" }}
-            render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full" id="location_type">
-                  <SelectValue placeholder="Select a location type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="city">City</SelectItem>
-                  <SelectItem value="region">Region</SelectItem>
-                  <SelectItem value="country">Country</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {errors.location_type && (
-            <p className="text-sm text-red-500">
-              {errors.location_type.message}
-            </p>
-          )}
+          <Label>Location Type*</Label>
+          {locationTypeFields.map((field, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const fieldName = `location_type.${index}.value` as any;
+            return (
+              <div key={field.id} className="flex gap-2 mb-2">
+                <Controller
+                  control={control}
+                  name={fieldName}
+                  rules={{ required: "Location type is required" }}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a location type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="city">City</SelectItem>
+                        <SelectItem value="region">Region</SelectItem>
+                        <SelectItem value="country">Country</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <Button type="button" onClick={() => removeLocationType(index)}>
+                  -
+                </Button>
+              </div>
+            );
+          })}
+          <Button
+            type="button"
+            onClick={() => appendLocationType({ value: "" })}
+          >
+            + Add Location Type
+          </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
-          <Label htmlFor="location_name">Name of the location</Label>
-          <Input
-            id="location_name"
-            type="text"
-            placeholder="Enter the name of the location"
-            {...register("location_name")}
-          />
+          <Label htmlFor="location_name">Name of the location(s)</Label>
+          {locationNameFields.map((field, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const fieldName = `location_name.${index}.value` as any;
+            return (
+              <div key={field.id} className="flex gap-2 mb-2">
+                <Controller
+                  control={control}
+                  name={fieldName}
+                  rules={{ required: "Location name is required" }}
+                  render={({ field }) => (
+                    <Input
+                      id={`location_name_${index}`}
+                      type="text"
+                      placeholder="Enter the name of the location"
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+                <Button type="button" onClick={() => removeLocationName(index)}>
+                  -
+                </Button>
+              </div>
+            );
+          })}
+          <Button
+            type="button"
+            onClick={() => appendLocationName({ value: "" })}
+          >
+            + Add Location Name
+          </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="excerpt">
