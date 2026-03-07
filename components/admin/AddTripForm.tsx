@@ -58,6 +58,10 @@ export default function AddTripForm() {
   });
 
   const onSubmit = async (data: TripFormData) => {
+    if (!date?.from) {
+      toast.error("Start date is required");
+      return;
+    }
     const slug = slugify(data.title, { lower: true, strict: true });
     const year = date?.from?.getFullYear();
     const month = date?.from ? date.from.getMonth() + 1 : undefined;
@@ -124,9 +128,9 @@ export default function AddTripForm() {
         console.error("Error updating trip with hero image URL:", updateError);
         return;
       }
-      toast.success("Trip created successfully!");
-      router.push(`/admin/trips`);
     }
+    toast.success("Trip created successfully!");
+    router.push(`/admin/trips`);
   };
 
   return (
@@ -189,10 +193,11 @@ export default function AddTripForm() {
           </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
-          <Label htmlFor="location-type">Location Type</Label>
+          <Label htmlFor="location-type">Location Type*</Label>
           <Controller
             control={control}
             name="location_type"
+            rules={{ required: "Location type is required" }}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger className="w-full" id="location_type">
@@ -206,6 +211,11 @@ export default function AddTripForm() {
               </Select>
             )}
           />
+          {errors.location_type && (
+            <p className="text-sm text-red-500">
+              {errors.location_type.message}
+            </p>
+          )}
         </div>
         <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="location_name">Name of the location</Label>
