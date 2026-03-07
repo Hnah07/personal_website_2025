@@ -8,8 +8,8 @@ type Trip = {
   month: number;
   start_date: Date;
   end_date: Date;
-  location_type: string;
-  location_name: string;
+  location_type: string[];
+  location_name: string[];
   country: string[];
   excerpt: string;
   hero_image: string;
@@ -23,8 +23,8 @@ export type { Trip };
 type TripFormData = {
   title: string;
   country: { value: string }[];
-  location_type: string;
-  location_name: string;
+  location_type: { value: string }[];
+  location_name: { value: string }[];
   start_date: Date;
   end_date?: Date;
   excerpt?: string;
