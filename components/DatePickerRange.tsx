@@ -26,7 +26,7 @@ export default function DatePickerRange({
 
   return (
     <div className="w-full px-3 mb-6 md:mb-0 gap-2 flex flex-col">
-      <Label htmlFor="date-picker-range">Choose a start and end date</Label>
+      <Label htmlFor="date-picker-range">Choose a start and end date*</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button

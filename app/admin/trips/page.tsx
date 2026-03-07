@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import TripsCrudTable from "@/components/admin/TripsCrudTable";
 import Header from "@/components/layout/Header";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function CRUDPage() {
   const supabase = await createClient();
@@ -26,6 +27,9 @@ export default async function CRUDPage() {
         >
           ← Back to Admin Dashboard
         </Link>
+        <Button variant="outline" asChild>
+          <Link href="/admin/trips/add-trip">+ Add a new trip</Link>
+        </Button>
         <TripsCrudTable data={data} />
       </div>
     </main>

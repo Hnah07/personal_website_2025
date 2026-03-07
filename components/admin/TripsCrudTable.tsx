@@ -40,6 +40,31 @@ const columns: ColumnDef<Trip>[] = [
     ),
   },
   {
+    accessorKey: "year",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Year
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "title",
+    cell: ({ getValue }) => (
+      <div className="max-w-xs truncate">{getValue<string>()}</div>
+    ),
+    header: "Title",
+  },
+  {
+    accessorKey: "location_name",
+    header: "Location",
+  },
+  {
     accessorKey: "published_at",
     header: ({ column }) => {
       return (
@@ -68,28 +93,6 @@ const columns: ColumnDef<Trip>[] = [
       );
     },
     cell: ({ getValue }) => formatDate(getValue<string>()),
-  },
-  {
-    accessorKey: "title",
-    header: "Title",
-  },
-  {
-    accessorKey: "location_name",
-    header: "Location",
-  },
-  {
-    accessorKey: "year",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Year
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
   },
 ];
 

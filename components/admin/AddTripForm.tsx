@@ -23,6 +23,8 @@ import { TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 import slugify from "slugify";
 import { createClient } from "@/utils/supabase/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
@@ -33,6 +35,7 @@ export default function AddTripForm() {
   // const [published, setPublished] = useState(false);
   const [heroImage, setHeroImage] = useState<File | null>(null);
   const [tripContent, setTripContent] = useState<OutputData | null>(null);
+  const router = useRouter();
 
   const {
     register,
@@ -44,17 +47,45 @@ export default function AddTripForm() {
     defaultValues: {
       published: false,
       country: [{ value: "" }],
+      location_type: [{ value: "" }],
+      location_name: [{ value: "" }],
     },
   });
 
   const excerptValue = watch("excerpt");
 
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: countryFields,
+    append: appendCountry,
+    remove: removeCountry,
+  } = useFieldArray({
     control,
     name: "country",
   });
 
+  const {
+    fields: locationTypeFields,
+    append: appendLocationType,
+    remove: removeLocationType,
+  } = useFieldArray({
+    control,
+    name: "location_type",
+  });
+
+  const {
+    fields: locationNameFields,
+    append: appendLocationName,
+    remove: removeLocationName,
+  } = useFieldArray({
+    control,
+    name: "location_name",
+  });
+
   const onSubmit = async (data: TripFormData) => {
+    if (!date?.from) {
+      toast.error("Start date is required");
+      return;
+    }
     const slug = slugify(data.title, { lower: true, strict: true });
     const year = date?.from?.getFullYear();
     const month = date?.from ? date.from.getMonth() + 1 : undefined;
@@ -80,9 +111,9 @@ export default function AddTripForm() {
         slug: slug,
         start_date: date?.from,
         end_date: date?.to,
-        country: data.country,
-        location_type: data.location_type,
-        location_name: data.location_name,
+        country: data.country.map((c) => c.value),
+        location_type: data.location_type.map((lt) => lt.value),
+        location_name: data.location_name.map((ln) => ln.value),
         excerpt: data.excerpt,
         content: tripContent,
         published: data.published,
@@ -122,6 +153,8 @@ export default function AddTripForm() {
         return;
       }
     }
+    toast.success("Trip created successfully!");
+    router.push(`/admin/trips`);
   };
 
   return (
@@ -144,7 +177,7 @@ export default function AddTripForm() {
         <DatePickerRange date={date} onDateChange={setDate} />
         <div className="w-full px-3 mb-6 md:mb-0">
           <Label htmlFor="country">Country*</Label>
-          {fields.map((field, index) => {
+          {countryFields.map((field, index) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const fieldName = `country.${index}.value` as any;
             return (
@@ -168,7 +201,7 @@ export default function AddTripForm() {
                     </Select>
                   )}
                 />
-                <Button type="button" onClick={() => remove(index)}>
+                <Button type="button" onClick={() => removeCountry(index)}>
                   -
                 </Button>
                 {errors.country?.[index]?.value && (
@@ -179,37 +212,80 @@ export default function AddTripForm() {
               </div>
             );
           })}
-          <Button type="button" onClick={() => append({ value: "" })}>
+          <Button type="button" onClick={() => appendCountry({ value: "" })}>
             + Add Country
           </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
-          <Label htmlFor="location-type">Location Type</Label>
-          <Controller
-            control={control}
-            name="location_type"
-            render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full" id="location_type">
-                  <SelectValue placeholder="Select a location type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="city">City</SelectItem>
-                  <SelectItem value="region">Region</SelectItem>
-                  <SelectItem value="country">Country</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
-          />
+          <Label>Location Type*</Label>
+          {locationTypeFields.map((field, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const fieldName = `location_type.${index}.value` as any;
+            return (
+              <div key={field.id} className="flex gap-2 mb-2">
+                <Controller
+                  control={control}
+                  name={fieldName}
+                  rules={{ required: "Location type is required" }}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a location type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="city">City</SelectItem>
+                        <SelectItem value="region">Region</SelectItem>
+                        <SelectItem value="country">Country</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <Button type="button" onClick={() => removeLocationType(index)}>
+                  -
+                </Button>
+              </div>
+            );
+          })}
+          <Button
+            type="button"
+            onClick={() => appendLocationType({ value: "" })}
+          >
+            + Add Location Type
+          </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
-          <Label htmlFor="location_name">Name of the location</Label>
-          <Input
-            id="location_name"
-            type="text"
-            placeholder="Enter the name of the location"
-            {...register("location_name")}
-          />
+          <Label htmlFor="location_name">Name of the location(s)</Label>
+          {locationNameFields.map((field, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const fieldName = `location_name.${index}.value` as any;
+            return (
+              <div key={field.id} className="flex gap-2 mb-2">
+                <Controller
+                  control={control}
+                  name={fieldName}
+                  rules={{ required: "Location name is required" }}
+                  render={({ field }) => (
+                    <Input
+                      id={`location_name_${index}`}
+                      type="text"
+                      placeholder="Enter the name of the location"
+                      onChange={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+                <Button type="button" onClick={() => removeLocationName(index)}>
+                  -
+                </Button>
+              </div>
+            );
+          })}
+          <Button
+            type="button"
+            onClick={() => appendLocationName({ value: "" })}
+          >
+            + Add Location Name
+          </Button>
         </div>
         <div className="px-3 mb-6 md:mb-0">
           <Label htmlFor="excerpt">

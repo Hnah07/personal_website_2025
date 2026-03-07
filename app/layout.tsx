@@ -3,6 +3,7 @@ import { Poppins, Pirata_One } from "next/font/google";
 import "./globals.css";
 // import ThemeContext from "./context/ThemeContext";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system">
           {children}
+          <Toaster richColors />
         </ThemeProvider>
       </body>
     </html>
