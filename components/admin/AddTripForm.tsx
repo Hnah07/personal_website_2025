@@ -80,7 +80,7 @@ export default function AddTripForm() {
         slug: slug,
         start_date: date?.from,
         end_date: date?.to,
-        country: data.country,
+        country: data.country.map((c) => c.value),
         location_type: data.location_type,
         location_name: data.location_name,
         excerpt: data.excerpt,
