@@ -23,6 +23,8 @@ import { TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 import slugify from "slugify";
 import { createClient } from "@/utils/supabase/client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
@@ -33,6 +35,7 @@ export default function AddTripForm() {
   // const [published, setPublished] = useState(false);
   const [heroImage, setHeroImage] = useState<File | null>(null);
   const [tripContent, setTripContent] = useState<OutputData | null>(null);
+  const router = useRouter();
 
   const {
     register,
@@ -121,6 +124,8 @@ export default function AddTripForm() {
         console.error("Error updating trip with hero image URL:", updateError);
         return;
       }
+      toast.success("Trip created successfully!");
+      router.push(`/admin/trips`);
     }
   };
 
