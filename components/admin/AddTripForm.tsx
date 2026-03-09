@@ -19,7 +19,7 @@ import countries from "country-list";
 import Dropzone from "./Dropzone";
 import TripContentBlocks from "./TripContentBlocks";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { TripFormData } from "@/types";
+import { Trip, TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 import slugify from "slugify";
 import { createClient } from "@/utils/supabase/client";
@@ -28,7 +28,8 @@ import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
-export default function AddTripForm() {
+export default function AddTripForm({ trip }: { trip?: Trip }) {
+  // dit component wordt zowel gebruikt voor het aanmaken van een nieuwe trip als voor het updaten van een bestaande trip, daarom accepteer ik hier een optionele trip prop. Als deze prop aanwezig is, betekent dit dat er een bestaande trip kan geupdate worden en kan ik de velden van het formulier vooraf vullen met de gegevens van de trip.
   const [date, setDate] = useState<DateRange | undefined>();
   const countryList = countries.getNames();
   // const [excerpt, setExcerpt] = useState("");
@@ -45,10 +46,22 @@ export default function AddTripForm() {
     formState: { errors },
   } = useForm<TripFormData>({
     defaultValues: {
-      published: false,
-      country: [{ value: "" }],
-      location_type: [{ value: "" }],
-      location_name: [{ value: "" }],
+      published: trip?.published ?? false,
+      country: trip?.country
+        ? trip.country.map((c) => ({ value: c }))
+        : [{ value: "" }],
+      location_type: trip?.location_type
+        ? trip.location_type.map((lt) => ({ value: lt }))
+        : [{ value: "" }],
+      location_name: trip?.location_name
+        ? trip.location_name.map((ln) => ({ value: ln }))
+        : [{ value: "" }],
+      title: trip?.title ?? "",
+      start_date: trip?.start_date,
+      end_date: trip?.end_date,
+      excerpt: trip?.excerpt ?? "",
+      hero_image: null,
+      trip_content: trip?.content,
     },
   });
 
