@@ -190,7 +190,11 @@ export default function AddTripForm({ trip }: { trip?: Trip }) {
         return;
       }
     }
-    toast.success("Trip created successfully!");
+    if (trip) {
+      toast.success("Trip updated successfully!");
+    } else {
+      toast.success("Trip created successfully!");
+    }
     router.push(`/admin/trips`);
   };
 
