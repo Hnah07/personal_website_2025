@@ -7,7 +7,7 @@ export default async function SingleTripPage({
   params: { slug: string };
 }) {
   const supabase = await createClient();
-  const { data, trip, error } = await supabase
+  const { data: trip, error } = await supabase
     .from("trips")
     .select("*")
     .eq("slug", params.slug)
