@@ -19,7 +19,7 @@ import countries from "country-list";
 import Dropzone from "./Dropzone";
 import TripContentBlocks from "./TripContentBlocks";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { TripFormData } from "@/types";
+import { Trip, TripFormData } from "@/types";
 import { OutputData } from "@editorjs/editorjs";
 import slugify from "slugify";
 import { createClient } from "@/utils/supabase/client";
@@ -28,8 +28,16 @@ import { useRouter } from "next/navigation";
 
 const supabase = createClient();
 
-export default function AddTripForm() {
-  const [date, setDate] = useState<DateRange | undefined>();
+export default function AddTripForm({ trip }: { trip?: Trip }) {
+  // dit component wordt zowel gebruikt voor het aanmaken van een nieuwe trip als voor het updaten van een bestaande trip, daarom accepteer ik hier een optionele trip prop. Als deze prop aanwezig is, betekent dit dat er een bestaande trip kan geupdate worden en kan ik de velden van het formulier vooraf vullen met de gegevens van de trip.
+  const [date, setDate] = useState<DateRange | undefined>(
+    trip?.start_date
+      ? {
+          from: new Date(trip.start_date),
+          to: trip.end_date ? new Date(trip.end_date) : undefined,
+        }
+      : undefined,
+  ); // bij een update van een form moet de start_date en end_date van de trip worden omgezet naar een DateRange object dat de DatePickerRange component kan gebruiken. Als er geen trip is (dus bij het aanmaken van een nieuwe trip) dan is de initial value van date undefined
   const countryList = countries.getNames();
   // const [excerpt, setExcerpt] = useState("");
   // const [published, setPublished] = useState(false);
@@ -45,10 +53,22 @@ export default function AddTripForm() {
     formState: { errors },
   } = useForm<TripFormData>({
     defaultValues: {
-      published: false,
-      country: [{ value: "" }],
-      location_type: [{ value: "" }],
-      location_name: [{ value: "" }],
+      published: trip?.published ?? false,
+      country: trip?.country
+        ? trip.country.map((c) => ({ value: c }))
+        : [{ value: "" }],
+      location_type: trip?.location_type
+        ? trip.location_type.map((lt) => ({ value: lt }))
+        : [{ value: "" }],
+      location_name: trip?.location_name
+        ? trip.location_name.map((ln) => ({ value: ln }))
+        : [{ value: "" }],
+      title: trip?.title ?? "",
+      start_date: trip?.start_date,
+      end_date: trip?.end_date,
+      excerpt: trip?.excerpt ?? "",
+      hero_image: null,
+      trip_content: trip?.content,
     },
   });
 
@@ -86,48 +106,65 @@ export default function AddTripForm() {
       toast.error("Start date is required");
       return;
     }
+
     const slug = slugify(data.title, { lower: true, strict: true });
     const year = date?.from?.getFullYear();
     const month = date?.from ? date.from.getMonth() + 1 : undefined;
-    const formData = {
-      ...data,
-      start_date: date?.from,
-      end_date: date?.to,
-      trip_content: tripContent,
-      hero_image: heroImage,
-      slug: slug,
-      year: year,
-      month: month,
-    };
-    console.log("Generated slug:", slug);
-    console.log("Extracted year:", year);
-    console.log("Extracted month:", month);
-    console.log("Form data:", formData);
 
-    const { data: trip, error } = await supabase
-      .from("trips")
-      .insert({
-        title: data.title,
-        slug: slug,
-        start_date: date?.from,
-        end_date: date?.to,
-        country: data.country.map((c) => c.value),
-        location_type: data.location_type.map((lt) => lt.value),
-        location_name: data.location_name.map((ln) => ln.value),
-        excerpt: data.excerpt,
-        content: tripContent,
-        published: data.published,
-        year: year,
-        month: month,
-      })
-      .select()
-      .single();
-    if (error) {
-      console.error("Error inserting trip:", error);
-      return;
+    let tripId: string;
+
+    if (trip) {
+      // Update existing trip
+      const { data: updatedTrip, error } = await supabase
+        .from("trips")
+        .update({
+          title: data.title,
+          slug: slug,
+          start_date: date?.from,
+          end_date: date?.to,
+          country: data.country.map((c) => c.value),
+          location_type: data.location_type.map((lt) => lt.value),
+          location_name: data.location_name.map((ln) => ln.value),
+          excerpt: data.excerpt,
+          content: tripContent,
+          published: data.published,
+          year: year,
+          month: month,
+        })
+        .eq("id", trip.id)
+        .select()
+        .single();
+      if (error) {
+        console.error("Error updating trip:", error);
+        return;
+      }
+      tripId = updatedTrip!.id;
+    } else {
+      // Create new trip
+      const { data: newTrip, error } = await supabase
+        .from("trips")
+        .insert({
+          title: data.title,
+          slug: slug,
+          start_date: date?.from,
+          end_date: date?.to,
+          country: data.country.map((c) => c.value),
+          location_type: data.location_type.map((lt) => lt.value),
+          location_name: data.location_name.map((ln) => ln.value),
+          excerpt: data.excerpt,
+          content: tripContent,
+          published: data.published,
+          year: year,
+          month: month,
+        })
+        .select()
+        .single();
+      if (error) {
+        console.error("Error inserting trip:", error);
+        return;
+      }
+      tripId = newTrip.id;
     }
-
-    const tripId = trip.id;
 
     if (heroImage) {
       const { data: imageData, error: imageError } = await supabase.storage
@@ -153,7 +190,11 @@ export default function AddTripForm() {
         return;
       }
     }
-    toast.success("Trip created successfully!");
+    if (trip) {
+      toast.success("Trip updated successfully!");
+    } else {
+      toast.success("Trip created successfully!");
+    }
     router.push(`/admin/trips`);
   };
 
