@@ -106,48 +106,65 @@ export default function AddTripForm({ trip }: { trip?: Trip }) {
       toast.error("Start date is required");
       return;
     }
+
     const slug = slugify(data.title, { lower: true, strict: true });
     const year = date?.from?.getFullYear();
     const month = date?.from ? date.from.getMonth() + 1 : undefined;
-    const formData = {
-      ...data,
-      start_date: date?.from,
-      end_date: date?.to,
-      trip_content: tripContent,
-      hero_image: heroImage,
-      slug: slug,
-      year: year,
-      month: month,
-    };
-    console.log("Generated slug:", slug);
-    console.log("Extracted year:", year);
-    console.log("Extracted month:", month);
-    console.log("Form data:", formData);
 
-    const { data: trip, error } = await supabase
-      .from("trips")
-      .insert({
-        title: data.title,
-        slug: slug,
-        start_date: date?.from,
-        end_date: date?.to,
-        country: data.country.map((c) => c.value),
-        location_type: data.location_type.map((lt) => lt.value),
-        location_name: data.location_name.map((ln) => ln.value),
-        excerpt: data.excerpt,
-        content: tripContent,
-        published: data.published,
-        year: year,
-        month: month,
-      })
-      .select()
-      .single();
-    if (error) {
-      console.error("Error inserting trip:", error);
-      return;
+    let tripId: string;
+
+    if (trip) {
+      // Update existing trip
+      const { data: updatedTrip, error } = await supabase
+        .from("trips")
+        .update({
+          title: data.title,
+          slug: slug,
+          start_date: date?.from,
+          end_date: date?.to,
+          country: data.country.map((c) => c.value),
+          location_type: data.location_type.map((lt) => lt.value),
+          location_name: data.location_name.map((ln) => ln.value),
+          excerpt: data.excerpt,
+          content: tripContent,
+          published: data.published,
+          year: year,
+          month: month,
+        })
+        .eq("id", trip.id)
+        .select()
+        .single();
+      if (error) {
+        console.error("Error updating trip:", error);
+        return;
+      }
+      tripId = updatedTrip!.id;
+    } else {
+      // Create new trip
+      const { data: newTrip, error } = await supabase
+        .from("trips")
+        .insert({
+          title: data.title,
+          slug: slug,
+          start_date: date?.from,
+          end_date: date?.to,
+          country: data.country.map((c) => c.value),
+          location_type: data.location_type.map((lt) => lt.value),
+          location_name: data.location_name.map((ln) => ln.value),
+          excerpt: data.excerpt,
+          content: tripContent,
+          published: data.published,
+          year: year,
+          month: month,
+        })
+        .select()
+        .single();
+      if (error) {
+        console.error("Error inserting trip:", error);
+        return;
+      }
+      tripId = newTrip.id;
     }
-
-    const tripId = trip.id;
 
     if (heroImage) {
       const { data: imageData, error: imageError } = await supabase.storage
