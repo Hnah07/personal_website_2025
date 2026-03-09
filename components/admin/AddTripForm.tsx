@@ -30,7 +30,14 @@ const supabase = createClient();
 
 export default function AddTripForm({ trip }: { trip?: Trip }) {
   // dit component wordt zowel gebruikt voor het aanmaken van een nieuwe trip als voor het updaten van een bestaande trip, daarom accepteer ik hier een optionele trip prop. Als deze prop aanwezig is, betekent dit dat er een bestaande trip kan geupdate worden en kan ik de velden van het formulier vooraf vullen met de gegevens van de trip.
-  const [date, setDate] = useState<DateRange | undefined>();
+  const [date, setDate] = useState<DateRange | undefined>(
+    trip?.start_date
+      ? {
+          from: new Date(trip.start_date),
+          to: trip.end_date ? new Date(trip.end_date) : undefined,
+        }
+      : undefined,
+  ); // bij een update van een form moet de start_date en end_date van de trip worden omgezet naar een DateRange object dat de DatePickerRange component kan gebruiken. Als er geen trip is (dus bij het aanmaken van een nieuwe trip) dan is de initial value van date undefined
   const countryList = countries.getNames();
   // const [excerpt, setExcerpt] = useState("");
   // const [published, setPublished] = useState(false);
