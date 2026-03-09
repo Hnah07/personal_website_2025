@@ -21,6 +21,7 @@ export default function TripContentBlocks({
   const editorContainerRef = useRef<HTMLDivElement | null>(null); // voor de div
   const editorRef = useRef<EditorJS | null>(null); // voor Editor.js instantie
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const initEditor = async () => {
       const EditorJS = (await import("@editorjs/editorjs")).default;
