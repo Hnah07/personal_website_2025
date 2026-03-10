@@ -7,6 +7,7 @@ import * as React from "react";
 import { ArrowUpDown } from "lucide-react";
 
 import formatDate from "@/utils/formatDate";
+import { useRouter } from "next/navigation";
 
 import {
   ColumnDef,
@@ -27,11 +28,34 @@ import {
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
 
+function TripActions({ slug }: { slug: string }) {
+  const router = useRouter();
+  return (
+    <div className="flex space-x-2">
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => router.push(`/admin/trips/${slug}`)}
+      >
+        Edit
+      </Button>
+      <Button variant="destructive" size="sm">
+        Delete
+      </Button>
+    </div>
+  );
+}
+
 const columns: ColumnDef<Trip>[] = [
   // {
   //   accessorKey: "id",
   //   header: "ID",
   // },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row }) => <TripActions slug={row.original.slug} />,
+  },
   {
     accessorKey: "published",
     header: () => <div className="text-center">Published</div>,
