@@ -52,6 +52,7 @@ function TripActions({ slug, id }: { slug: string; id: string }) {
       return;
     }
     toast.success("Trip deleted successfully!");
+    router.refresh();
   }
   return (
     <div className="flex space-x-2">
