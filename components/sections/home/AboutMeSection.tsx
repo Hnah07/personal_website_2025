@@ -43,7 +43,7 @@ const AboutMeSection = () => {
           </p>
           <p>
             Currently, I&apos;m looking for my first job as a{" "}
-            <Highlight index={7}>Full Stack Developer</Highlight>.
+            <Highlight index={7}>Developer</Highlight>.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <PrimaryButton href="/cv_hannah_casier.pdf">View cv</PrimaryButton>
