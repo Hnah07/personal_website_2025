@@ -47,7 +47,15 @@ const Hero = () => {
 
       {/* Scroll Indicator Arrow */}
       <div className="absolute bottom-20 left-0 right-0 flex justify-center animate-bounce [animation-delay:2s] [animation-fill-mode:both]">
-        <div className="w-6 h-6 border-r-2 border-b-2 border-black/60 dark:border-black/40 rotate-45 transform origin-center"></div>
+        <div
+          className="w-6 h-6 border-r-2 border-b-2 border-black/60 dark:border-black/40 rotate-45 transform origin-center cursor-pointer hover:border-black/80 dark:hover:border-black/60 transition-colors"
+          onClick={() => {
+            const aboutMeSection = document.getElementById("aboutme");
+            if (aboutMeSection) {
+              aboutMeSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        ></div>
       </div>
     </div>
   );
