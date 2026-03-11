@@ -257,7 +257,6 @@ const Resonance = () => {
           </li>
         </ul>
       </div>
-
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 mt-10">
         <div className="border-t border-gray-200 dark:border-gray-700 my-16"></div>
       </div>
@@ -390,6 +389,15 @@ const Resonance = () => {
           </li>
         </ul>
       </div>
+
+      <iframe
+        allow="clipboard-write"
+        scrolling="no"
+        // class="fp-iframe"
+        // style="border: 1px solid lightgray; width: 100%; height: 400px;"
+        className="border border-gray-300 rounded-lg w-full max-w-7xl mx-auto h-[700px]"
+        src="https://heyzine.com/flip-book/ca8140c803.html"
+      ></iframe>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 mt-10">
         <div className="text-center">
           <a
