@@ -8,6 +8,7 @@ const skills = [
   "HTML",
   "CSS",
   "SCSS",
+  "Typescript",
   "JavaScript",
   "React",
   "Node.js",
@@ -37,6 +38,7 @@ const skills = [
   "Penpot",
   "Photoshop",
   "Lightroom",
+  "InDesign",
 ];
 
 const SkillsSection = () => {
