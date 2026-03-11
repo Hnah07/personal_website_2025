@@ -8,6 +8,7 @@ const skills = [
   "HTML",
   "CSS",
   "SCSS",
+  "Typescript",
   "JavaScript",
   "React",
   "Node.js",
@@ -37,6 +38,7 @@ const skills = [
   "Penpot",
   "Photoshop",
   "Lightroom",
+  "InDesign",
 ];
 
 const SkillsSection = () => {
@@ -65,7 +67,7 @@ const SkillsSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="flex flex-col items-center h-[60vh]"
     >
-      <h2>(Acquiring) skills</h2>
+      <h2>Skills</h2>
       <ul className="pt-8 flex flex-row flex-wrap justify-center cursor-default gap-2">
         {skills.map((skill, index) => (
           <motion.li
