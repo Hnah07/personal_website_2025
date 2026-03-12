@@ -28,20 +28,28 @@ export default function TripCard({
   endDate: string;
 }) {
   return (
-    <Card className="mb-8 w-1/3">
-      <div className="relative">
-        <Image src={heroImage} alt={title} width={150} height={100}></Image>
+    <Card className="mb-8">
+      <div className="relative h-48 w-full overflow-hidden rounded-t-md">
+        <Image src={heroImage} alt={title} fill></Image>
         <div className="absolute top-2 right-2 flex flex-col gap-2">
           <div className="flex flex-wrap gap-2">
             {location.map((l) => (
-              <Badge key={l} variant="secondary">
+              <Badge
+                key={l}
+                variant="secondary"
+                className="bg-brilliant-rose-light text-eerie-black dark:hover:bg-brilliant-rose-light/80"
+              >
                 {l}
               </Badge>
             ))}
           </div>
           <div className="flex flex-wrap gap-2 flex-row-reverse">
             {country.map((c) => (
-              <Badge key={c} variant="secondary">
+              <Badge
+                key={c}
+                variant="secondary"
+                className="bg-brilliant-rose-light text-eerie-black dark:hover:bg-brilliant-rose-light/80"
+              >
                 {c}
               </Badge>
             ))}
@@ -54,7 +62,9 @@ export default function TripCard({
             ? formatDate(startDate, true)
             : `${formatDate(startDate, true)} - ${formatDate(endDate, true)}`}
         </CardDescription>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <h3>{title}</h3>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p>{excerpt}</p>

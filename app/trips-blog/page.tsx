@@ -30,24 +30,26 @@ export default async function TripsBlogPage() {
     <main className="flex flex-col items-center">
       <Header />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="pt-20">Trips Blog</h1>
+        <h1 className="pt-20 mb-8">Trips Blog</h1>
 
         {Object.entries(tripsByYear).map(([year, trips]) => (
           <div key={year}>
-            <h2>{year}</h2>
-            {trips.map((trip) => (
-              <div key={trip.slug}>
-                <TripCard
-                  heroImage={trip.hero_image}
-                  title={trip.title}
-                  location={trip.location_name}
-                  country={trip.country}
-                  excerpt={trip.excerpt}
-                  startDate={trip.start_date}
-                  endDate={trip.end_date}
-                />
-              </div>
-            ))}
+            <h2 className="mb-4">{year}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {trips.map((trip) => (
+                <div key={trip.slug}>
+                  <TripCard
+                    heroImage={trip.hero_image}
+                    title={trip.title}
+                    location={trip.location_name}
+                    country={trip.country}
+                    excerpt={trip.excerpt}
+                    startDate={trip.start_date}
+                    endDate={trip.end_date}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
