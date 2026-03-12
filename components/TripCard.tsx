@@ -1,7 +1,7 @@
 import {
   Card,
   CardHeader,
-  CardFooter,
+  //   CardFooter,
   CardTitle,
   CardDescription,
   CardContent,
@@ -34,7 +34,12 @@ export default function TripCard({
     <Link href={`/trips-blog/${slug}`}>
       <Card className="mb-8">
         <div className="relative h-48 w-full overflow-hidden rounded-t-md">
-          <Image src={heroImage} alt={title} fill></Image>
+          <Image
+            src={heroImage}
+            alt={title}
+            fill
+            className="object-cover"
+          ></Image>
           <div className="absolute top-2 right-2 flex flex-col gap-2">
             <div className="flex flex-wrap gap-2">
               {location.map((l) => (
@@ -71,13 +76,13 @@ export default function TripCard({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p>{excerpt}</p>
+          <p className="-mt-4">{excerpt}</p>
         </CardContent>
-        <CardFooter>
+        {/* <CardFooter>
           <p>
             {startDate} - {endDate}
           </p>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </Link>
   );
