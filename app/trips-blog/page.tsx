@@ -10,6 +10,7 @@ export default async function TripsBlogPage() {
     .select(
       "title, slug, year, start_date, end_date, location_name, country, excerpt, hero_image",
     )
+    .eq("published", true)
     .order("year", { ascending: false });
   if (error) {
     console.error(error);
