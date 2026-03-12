@@ -6,7 +6,10 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import Image from "next/image";
+
 export default function TripCard({
+  heroImage,
   title,
   location,
   country,
@@ -14,15 +17,17 @@ export default function TripCard({
   startDate,
   endDate,
 }: {
+  heroImage: string;
   title: string;
-  location: string;
-  country: string;
+  location: string[];
+  country: string[];
   excerpt: string;
   startDate: string;
   endDate: string;
 }) {
   return (
-    <Card>
+    <Card className="mb-8 w-1/3">
+      <Image src={heroImage} alt={title} width={150} height={100}></Image>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>

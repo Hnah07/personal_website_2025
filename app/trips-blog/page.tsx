@@ -1,14 +1,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { createClient } from "@/utils/supabase/server";
-import {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import TripCard from "@/components/TripCard";
 
 export default async function TripsBlogPage() {
   const supabase = await createClient();
@@ -43,7 +36,15 @@ export default async function TripsBlogPage() {
             <h2>{year}</h2>
             {trips.map((trip) => (
               <div key={trip.slug}>
-                <h3>{trip.title}</h3>
+                <TripCard
+                  heroImage={trip.hero_image}
+                  title={trip.title}
+                  location={trip.location_name}
+                  country={trip.country}
+                  excerpt={trip.excerpt}
+                  startDate={trip.start_date}
+                  endDate={trip.end_date}
+                />
               </div>
             ))}
           </div>
