@@ -50,7 +50,9 @@ export default function TripCard({
       </div>
       <CardHeader>
         <CardDescription>
-          {formatDate(startDate, true)} - {formatDate(endDate, true)}
+          {startDate === endDate
+            ? formatDate(startDate, true)
+            : `${formatDate(startDate, true)} - ${formatDate(endDate, true)}`}
         </CardDescription>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
