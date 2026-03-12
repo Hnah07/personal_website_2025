@@ -46,6 +46,7 @@ export default async function TripsBlogPage() {
                     excerpt={trip.excerpt}
                     startDate={trip.start_date}
                     endDate={trip.end_date}
+                    slug={trip.slug}
                   />
                 </div>
               ))}
