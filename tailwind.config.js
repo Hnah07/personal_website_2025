@@ -22,6 +22,7 @@ module.exports = {
       colors: {
         "eerie-black": "#1b1b1b",
         "brilliant-rose": "#fb53b6",
+        "brilliant-rose-light": "#fde8f5",
         verdigris: "#17bebb",
         saffron: "#e1bc29",
         parchment: "#f2e7c9",
