@@ -72,11 +72,11 @@ export default function TripCard({
               : `${formatDate(startDate, true)} - ${formatDate(endDate, true)}`}
           </CardDescription>
           <CardTitle>
-            <h3>{title}</h3>
+            <h3 className="leading-none text-[1.6rem]">{title}</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="-mt-4">{excerpt}</p>
+          <p className="-mt-4 text-sm">{excerpt}</p>
         </CardContent>
         {/* <CardFooter>
           <p>

@@ -2,13 +2,14 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { createClient } from "@/utils/supabase/server";
 import TripCard from "@/components/TripCard";
+import HeroBanner from "@/components/HeroBanner";
 
 export default async function TripsBlogPage() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("trips")
     .select(
-      "title, slug, year, start_date, end_date, location_name, country, excerpt, hero_image",
+      "id, title, slug, year, month, start_date, end_date, location_name, location_type, country, excerpt, hero_image, published, created_at, updated_at",
     )
     .eq("published", true)
     .order("year", { ascending: false });
@@ -29,8 +30,9 @@ export default async function TripsBlogPage() {
   return (
     <main className="flex flex-col items-center">
       <Header />
+      <HeroBanner trips={data} />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="pt-20 mb-8">Trips Blog</h1>
+        <h1 className="pt-16 mb-8">Trips Blog</h1>
 
         {Object.entries(tripsByYear).map(([year, trips]) => (
           <div key={year}>
