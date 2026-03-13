@@ -32,7 +32,7 @@ export default async function TripsBlogPage() {
       <Header />
       <HeroBanner trips={data} />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="pt-20 mb-8">Trips Blog</h1>
+        <h1 className="pt-16 mb-8">Trips Blog</h1>
 
         {Object.entries(tripsByYear).map(([year, trips]) => (
           <div key={year}>
