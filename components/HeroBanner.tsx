@@ -38,8 +38,9 @@ export default function HeroBanner({ trips }: { trips: Trip[] }) {
           fill
           className="object-cover"
         ></Image>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="absolute bottom-4 left-4 lg:max-w-[50%] max-w-[70%]">
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4 ">
             {currentTrip.country.map((c) => (
               <Badge
                 key={c}
