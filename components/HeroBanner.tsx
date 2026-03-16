@@ -11,20 +11,26 @@ import { Badge } from "@/components/ui/badge";
 export default function HeroBanner({ trips }: { trips: Trip[] }) {
   const tripsWithHeroBanner = trips.filter((t) => t.hero_image);
   const [currentTrip, setCurrentTrip] = useState(tripsWithHeroBanner[0]);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     setInterval(() => {
-      setCurrentTrip(
-        tripsWithHeroBanner[
-          Math.floor(Math.random() * tripsWithHeroBanner.length)
-        ],
-      );
-    }, 10000);
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentTrip(
+          tripsWithHeroBanner[
+            Math.floor(Math.random() * tripsWithHeroBanner.length)
+          ],
+        );
+        setIsVisible(true);
+      }, 300);
+    }, 8000);
   }, []);
-  console.log(currentTrip);
 
   return (
-    <div className="relative w-full h-[85vh]">
+    <div
+      className={`relative w-full h-[85vh] transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}
+    >
       <Link href={`/trips-blog/${currentTrip.slug}`}>
         <Image
           src={currentTrip.hero_image!}
