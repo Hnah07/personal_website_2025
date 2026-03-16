@@ -11,20 +11,26 @@ import { Badge } from "@/components/ui/badge";
 export default function HeroBanner({ trips }: { trips: Trip[] }) {
   const tripsWithHeroBanner = trips.filter((t) => t.hero_image);
   const [currentTrip, setCurrentTrip] = useState(tripsWithHeroBanner[0]);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     setInterval(() => {
-      setCurrentTrip(
-        tripsWithHeroBanner[
-          Math.floor(Math.random() * tripsWithHeroBanner.length)
-        ],
-      );
-    }, 10000);
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentTrip(
+          tripsWithHeroBanner[
+            Math.floor(Math.random() * tripsWithHeroBanner.length)
+          ],
+        );
+        setIsVisible(true);
+      }, 300);
+    }, 8000);
   }, []);
-  console.log(currentTrip);
 
   return (
-    <div className="relative w-full h-[85vh]">
+    <div
+      className={`relative w-full h-[85vh] transition-opacity duration-500 ${isVisible ? "opacity-100" : "opacity-0"}`}
+    >
       <Link href={`/trips-blog/${currentTrip.slug}`}>
         <Image
           src={currentTrip.hero_image!}
@@ -32,8 +38,9 @@ export default function HeroBanner({ trips }: { trips: Trip[] }) {
           fill
           className="object-cover"
         ></Image>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="absolute bottom-4 left-4 lg:max-w-[50%] max-w-[70%]">
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4 ">
             {currentTrip.country.map((c) => (
               <Badge
                 key={c}
