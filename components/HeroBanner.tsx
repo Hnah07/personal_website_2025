@@ -8,13 +8,22 @@ import { useEffect, useState } from "react";
 import { CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-export default function HeroBanner({ trips }: { trips: Trip[] }) {
-  const tripsWithHeroBanner = trips.filter((t) => t.hero_image);
-  const [currentTrip, setCurrentTrip] = useState(tripsWithHeroBanner[0]);
+export default function HeroBanner({
+  trips,
+  trip,
+}: {
+  trips?: Trip[];
+  trip?: Trip[];
+}) {
+  const tripsWithHeroBanner = trips?.filter((t) => t.hero_image) ?? [];
+  const [currentTrip, setCurrentTrip] = useState<Trip>(
+    (trip ?? tripsWithHeroBanner[0]) as Trip,
+  );
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    setInterval(() => {
+    if (!trips || trips.length === 0) return;
+    const interval = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
         setCurrentTrip(
@@ -25,6 +34,7 @@ export default function HeroBanner({ trips }: { trips: Trip[] }) {
         setIsVisible(true);
       }, 300);
     }, 8000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
