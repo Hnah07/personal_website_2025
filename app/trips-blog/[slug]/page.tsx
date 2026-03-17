@@ -3,6 +3,43 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroBanner from "@/components/HeroBanner";
 import formatDate from "@/utils/formatDate";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+  const { data: trip } = await supabase
+    .from("trips")
+    .select("title, excerpt, hero_image, published_at")
+    .eq("slug", slug)
+    .single();
+
+  return {
+    title: trip?.title,
+    description: trip?.excerpt,
+    authors: [{ name: "Hannah Casier" }],
+    openGraph: {
+      title: trip?.title,
+      description: trip?.excerpt,
+      images: [trip?.hero_image ?? ""],
+      type: "article",
+      publishedTime: trip?.published_at,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: trip?.title,
+      description: trip?.excerpt,
+      images: [trip?.hero_image ?? ""],
+    },
+    alternates: {
+      canonical: `https://hannahc.be/trips-blog/${slug}`,
+    },
+  };
+}
 
 export default async function TripView({
   params,
