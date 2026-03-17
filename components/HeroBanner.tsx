@@ -65,6 +65,7 @@ export default function HeroBanner({
           {trips && (
             <p className="text-sm text-parchment">{currentTrip.excerpt}</p>
           )}
+
           <CardDescription>
             {currentTrip.start_date === currentTrip.end_date
               ? formatDate(currentTrip.start_date.toString(), true)
