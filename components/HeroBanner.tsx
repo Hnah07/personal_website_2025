@@ -61,8 +61,10 @@ export default function HeroBanner({
               </Badge>
             ))}
           </div>
-          <h3 className="leading-none">{currentTrip.title}</h3>
-          <p className="text-sm text-parchment">{currentTrip.excerpt}</p>
+          {trips && <h3 className="leading-none">{currentTrip.title}</h3>}
+          {trips && (
+            <p className="text-sm text-parchment">{currentTrip.excerpt}</p>
+          )}
           <CardDescription>
             {currentTrip.start_date === currentTrip.end_date
               ? formatDate(currentTrip.start_date.toString(), true)
