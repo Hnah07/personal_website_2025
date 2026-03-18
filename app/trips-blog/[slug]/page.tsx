@@ -75,7 +75,7 @@ export default async function TripView({
           return (
             <ListTag
               key={b.id}
-              className={`pl-6
+              className={`pl-8
                 ${b.data.style === "ordered" ? "list-decimal" : "list-disc"}`}
             >
               {b.data.items.map((item: { content: string }, i: number) => (
@@ -92,7 +92,9 @@ export default async function TripView({
                 width={800}
                 height={600}
               />
-              {b.data.caption && <figcaption>{b.data.caption}</figcaption>}
+              {b.data.caption && (
+                <figcaption className="text-sm">{b.data.caption}</figcaption>
+              )}
             </figure>
           );
       }
