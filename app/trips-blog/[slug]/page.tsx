@@ -4,6 +4,8 @@ import Footer from "@/components/layout/Footer";
 import HeroBanner from "@/components/HeroBanner";
 import formatDate from "@/utils/formatDate";
 import type { Metadata } from "next";
+import { JSX } from "react";
+import Image from "next/image";
 
 export async function generateMetadata({
   params,
@@ -59,6 +61,41 @@ export default async function TripView({
     return <p>Something went wrong...</p>;
   }
 
+  function showContent() {
+    return trip.content?.blocks.map(
+      (b{ type: string; id: string; data: any }) => {
+        switch (b.type) {
+          case "paragraph":
+            return <p key={b.id}>{b.data.text}</p>;
+          case "header":
+            const Tag = `h${b.data.level}` as keyof JSX.IntrinsicElements;
+            return <Tag key={b.id}>{b.data.text}</Tag>;
+          case "list":
+            const ListTag = b.data.style === "ordered" ? "ol" : "ul";
+            return (
+              <ListTag key={b.id}>
+                {b.data.items.map((item: { content: string }, i: number) => (
+                  <li key={i}>{item.content}</li>
+                ))}
+              </ListTag>
+            );
+          case "image":
+            return (
+              <figure key={b.id}>
+                <Image
+                  src={b.data.file.url}
+                  alt={b.data.caption}
+                  width={800}
+                  height={600}
+                />
+                {b.data.caption && <figcaption>{b.data.caption}</figcaption>}
+              </figure>
+            );
+        }
+      },
+    );
+  }
+
   return (
     <main className="flex flex-col items-center">
       <Header />
@@ -70,7 +107,10 @@ export default async function TripView({
             ? formatDate(trip.start_date.toString(), true)
             : `${formatDate(trip.start_date.toString(), true)} - ${formatDate(trip.end_date!.toString(), true)}`}
         </p>
-        <p>This is going to be a trip!</p>
+        <p>
+          <em>{trip.excerpt}</em>
+        </p>
+        {showContent()}
       </div>
       <Footer />
     </main>

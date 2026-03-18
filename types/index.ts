@@ -34,3 +34,11 @@ type TripFormData = {
   trip_content?: OutputData;
 };
 export type { TripFormData };
+
+type EditorBlock = {
+  type: string;
+  id: string;
+  data: Record<string, unknown>;
+};
+
+export type { EditorBlock };
