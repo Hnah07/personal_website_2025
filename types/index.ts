@@ -34,3 +34,12 @@ type TripFormData = {
   trip_content?: OutputData;
 };
 export type { TripFormData };
+
+type EditorBlock = {
+  type: string;
+  id: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: Record<string, any>;
+};
+
+export type { EditorBlock };
