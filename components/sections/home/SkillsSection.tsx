@@ -15,8 +15,6 @@ const skills = [
   "Express",
   "Next.js",
   "PHP",
-  "DOM manipulation",
-  "CRUD",
   "Laravel",
   "Drupal",
   "SiteManager",
