@@ -20,30 +20,27 @@ const AboutMeSection = () => {
         >
           <h2>About me</h2>
           <p className="pt-8">
-            I&apos;m Hannah Casier, a recently graduated{" "}
-            <Highlight index={0}>Full Stack Developer</Highlight> with a deep
-            passion for <Highlight index={1}>technology and design</Highlight>.
-            I would love to create
-            <Highlight index={2}>
-              beautiful and accessible websites
-            </Highlight>{" "}
-            that combine aesthetics with seamless user experiences.
+            I&apos;m Hannah Casier, curious by nature,{" "}
+            <Highlight index={0}>detail-oriented</Highlight> and always
+            interested in learning new things. With a background in web
+            development and a love for both technology and creativity, I’m
+            exploring where my strengths and interests align best.
           </p>
           <p>
-            Beyond coding, I&apos;m a{" "}
-            <Highlight index={3}>casual gamer</Highlight> who enjoys playing on
+            During my free time, I&apos;m a{" "}
+            <Highlight index={1}>casual gamer</Highlight> who enjoys playing on
             her retro handheld on the go or at home, an{" "}
-            <Highlight index={4}>avid photography enthusiast</Highlight>
-            capturing life&apos;s moments through my lens, a{" "}
-            <Highlight index={5}>craft beer aficionado</Highlight>
-            always eager to discover unique brews, and I&apos;ve recently
-            started playing{" "}
-            <Highlight index={6}>competitive table tennis</Highlight>, enjoying
-            the challenge and excitement of the game.
+            <Highlight index={2}>avid photography enthusiast</Highlight>, a{" "}
+            <Highlight index={3}>craft beer aficionado</Highlight>
+            always eager to discover unique brews, and a{" "}
+            <Highlight index={4}>competitive table tennis</Highlight> player,
+            enjoying the challenge and excitement of the game.
           </p>
           <p>
-            Currently, I&apos;m looking for my first job as a{" "}
-            <Highlight index={7}>Developer</Highlight>.
+            Currently open to roles where I can combine{" "}
+            <Highlight index={5}>analytical thinking</Highlight>,{" "}
+            <Highlight index={6}>creativity</Highlight>, and{" "}
+            <Highlight index={7}>technology</Highlight>.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <PrimaryButton href="/cv_hannah_casier.pdf">View cv</PrimaryButton>
