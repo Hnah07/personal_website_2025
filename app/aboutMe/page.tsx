@@ -43,17 +43,19 @@ export default function AboutMe() {
         </p>
         <p>
           That&apos;s when I took the leap into Full Stack Development at Syntra
-          AB and discovered that coding is not only something I can do, but
-          something I truly love. It challenged me, but it also gave me freedom:
-          to build, to design, and to create. Now, with experience in Laravel,
-          Next.js, React, and Node.js, I&apos;m focused on developing
-          applications that are technically strong while also offering a great
-          user experience.
+          AB, where I discovered that building for the web is something I
+          genuinely enjoy. It challenged me, but also gave me the freedom to
+          create, design, and solve problems in a practical way.{" "}
+        </p>
+        <p>
+          I&apos;ve worked with technologies like Laravel, Next.js, React, and
+          Node.js, and I enjoy building applications that balance technical
+          structure with user experience.
         </p>
         <p>
           <b>
-            Now, I&apos;m looking for my first job as a Full Stack/Frontend
-            Developer. So please contact me if you have any opportunities!
+            I&apos;m currently open to opportunities in digital or
+            technology-related roles where I can continue learning and growing.
           </b>
         </p>
         <p>
