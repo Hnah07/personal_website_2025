@@ -22,7 +22,7 @@ const skills = [
   "MySQL",
   "MongoDB",
   "SQLite",
-  "Postgress",
+  "PostgreSQL",
   "REST APIs",
   "Docker",
   "Vite",
