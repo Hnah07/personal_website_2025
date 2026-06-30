@@ -37,8 +37,12 @@ const Hero = () => {
       </h1>
 
       <p className="animate-fade-in-right m-8 text-xl md:text-xl xs:text-center">
-        <strong>Full stack developer, designer, and photographer.</strong>
-        <br />I create web apps/sites and the visuals that make them stand out.
+        <strong>
+          Digital professional with a background in web development, design and
+          visual communication.
+        </strong>
+        <br />I enjoy solving problems, building digital experiences, and
+        creating things that are both useful and well-designed.
       </p>
 
       <p className="animate-fade-in-left m-8 text-xl md:text-xl text-brilliant-rose font-extralight">
