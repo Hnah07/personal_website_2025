@@ -40,7 +40,7 @@ const AboutMeSection = () => {
             Currently open to roles where I can combine{" "}
             <Highlight index={5}>analytical thinking</Highlight>,{" "}
             <Highlight index={6}>creativity</Highlight>, and{" "}
-            <Highlight index={7}>technology</Highlight>.
+            <Highlight index={7}>technology</Highlight>.git
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <PrimaryButton href="/cv_hannah_casier.pdf">View cv</PrimaryButton>
