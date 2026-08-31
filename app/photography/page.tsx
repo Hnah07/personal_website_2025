@@ -30,7 +30,7 @@ export default function PhotographyPortfolioPage() {
   return (
     <main className="min-h-screen bg-[#f8f7f3] text-eerie-black transition-colors dark:bg-eerie-black dark:text-parchment lg:flex">
       <aside className="flex min-h-0 flex-col border-b border-eerie-black/15 px-6 py-6 dark:border-parchment/15 lg:fixed lg:inset-y-0 lg:w-[22rem] lg:border-b-0 lg:border-r lg:px-8 lg:py-8">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-start justify-between gap-4">
           <Link href="/" className="no-underline text-inherit">
             <p className="m-0 font-pirata text-4xl leading-none text-brilliant-rose">
               Hannah Casier
@@ -39,7 +39,9 @@ export default function PhotographyPortfolioPage() {
               Photography
             </p>
           </Link>
-          <ThemeToggle />
+          <div className="mt-1.5">
+            <ThemeToggle />
+          </div>
         </div>
 
         <p className="my-8 max-w-xs text-sm leading-6 text-eerie-black/75 dark:text-parchment/75">
@@ -78,7 +80,7 @@ export default function PhotographyPortfolioPage() {
           >
             Get in touch
           </Link>
-          <div className="mt-6 flex items-center gap-4">
+          <div className="mt-6 hidden items-center gap-4 lg:flex">
             {socialLinks.map(({ href, label, icon: Icon }) => (
               <a
                 key={label}
@@ -92,7 +94,7 @@ export default function PhotographyPortfolioPage() {
               </a>
             ))}
           </div>
-          <p className="mb-0 mt-6 text-xs text-eerie-black/55 dark:text-parchment/55">
+          <p className="mb-0 mt-6 hidden text-xs text-eerie-black/55 dark:text-parchment/55 lg:block">
             {new Date().getFullYear()} Hannah Casier
           </p>
         </div>
@@ -103,11 +105,11 @@ export default function PhotographyPortfolioPage() {
         aria-live="polite"
       >
         {activeCollection.photos.length > 0 ? (
-          <div className="flex h-[72svh] gap-1 overflow-x-auto p-1 snap-x snap-mandatory lg:h-[min(calc((100vw-22rem)/1.5),calc(100dvh-4rem))] lg:overflow-y-hidden lg:p-0">
+          <div className="flex flex-col gap-1 p-1 lg:h-[min(calc((100vw-22rem)/1.5),calc(100dvh-4rem))] lg:flex-row lg:overflow-x-auto lg:overflow-y-hidden lg:p-0 lg:snap-x lg:snap-mandatory">
             {activeCollection.photos.map((photo) => (
               <figure
                 key={photo.src}
-                className="relative m-0 h-full flex-none overflow-hidden bg-light-grey snap-start dark:bg-eerie-black"
+                className="relative m-0 w-full flex-none overflow-hidden bg-light-grey dark:bg-eerie-black lg:h-full lg:w-auto lg:snap-start"
                 style={{ aspectRatio: photo.aspectRatio }}
               >
                 <Image
@@ -136,6 +138,26 @@ export default function PhotographyPortfolioPage() {
           </div>
         )}
       </section>
+
+      <footer className="px-6 py-8 text-center lg:hidden">
+        <div className="flex items-center justify-center gap-4">
+          {socialLinks.map(({ href, label, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={label}
+              className="text-eerie-black transition-colors hover:text-brilliant-rose dark:text-parchment"
+            >
+              <Icon size={19} strokeWidth={1.7} />
+            </a>
+          ))}
+        </div>
+        <p className="mb-0 mt-6 text-xs text-eerie-black/55 dark:text-parchment/55">
+          {new Date().getFullYear()} Hannah Casier
+        </p>
+      </footer>
     </main>
   );
 }
