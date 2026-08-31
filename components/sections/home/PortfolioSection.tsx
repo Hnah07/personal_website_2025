@@ -18,7 +18,7 @@ const PortfolioSection = () => {
     {
       title: "Photography",
       image: "/boottocht.jpg",
-      href: "https://portfolio.pixelfed.social/HannahCasier",
+      href: "/photography",
     },
   ];
 
