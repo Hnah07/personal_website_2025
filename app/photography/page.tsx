@@ -45,8 +45,25 @@ export default function PhotographyPortfolioPage() {
         </div>
 
         <p className="my-8 max-w-xs text-sm leading-6 text-eerie-black/75 dark:text-parchment/75">
-          A collection of good company, small details, and places that stay with
-          you.
+          Photos of people, places, and everything in between. <br />
+          <br />
+          Currently volunteering as photographer for the municipality of{" "}
+          <a
+            href="https://www.lint.be/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <b>Lint</b>
+          </a>
+          , and co-founder/photographer of{" "}
+          <a
+            href="https://beersbites.brussels"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <b>Beers &apos;n&apos; Bites in Brussels</b>
+          </a>{" "}
+          (a blog about craft beer & food in Brussels).
         </p>
 
         <nav aria-label="Photography themes">
