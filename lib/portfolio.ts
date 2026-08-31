@@ -88,7 +88,73 @@ export const photographyThemes: Record<
   events: {
     title: "Events",
     description: "Moments full of energy, movement, and people.",
-    photos: [],
+    photos: [
+      {
+        src: "/photos/events/2025-mohsin-03.jpg",
+        alt: "A moment at Mohsin's event",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/events/2025-mohsin-18.jpg",
+        alt: "Guests at Mohsin's event",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/events/2026-01_nieuwjaarsdrink_lint-04.jpg",
+        alt: "A moment at the Lint New Year's reception",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/2026-01_nieuwjaarsdrink_lint-26.jpg",
+        alt: "Guests at the Lint New Year's reception",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/2026-01_nieuwjaarsdrink_lint-43.JPG",
+        alt: "A detail from the Lint New Year's reception",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/2026-01_nieuwjaarsdrink_lint-47.jpg",
+        alt: "The Lint New Year's reception",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/2026-lint-fonkelt-01.jpg",
+        alt: "A portrait at Lint Fonkelt",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/2026-lint-fonkelt-16.jpg",
+        alt: "A moment at Lint Fonkelt",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/events/2026-lint-fonkelt-34.jpg",
+        alt: "An evening at Lint Fonkelt",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/hettyhelsmoortel-11.jpg",
+        alt: "Hetty Helsmoortel on stage",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/events/meimarkt-09.jpg",
+        alt: "A scene at the Meimarkt",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/events/meimarkt-11.jpg",
+        alt: "Visitors at the Meimarkt",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/events/meimarkt-16.jpg",
+        alt: "A portrait at the Meimarkt",
+        aspectRatio: 0.67,
+      },
+    ],
   },
   "travel-nature": {
     title: "Travel & Nature",
