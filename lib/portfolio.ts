@@ -83,6 +83,21 @@ export const photographyThemes: Record<
         alt: "A detail from Kastar in Brussels",
         aspectRatio: 1.5,
       },
+      {
+        src: "/photos/beer-food/2025-07_uitstap_BXL-Breweries-03.jpg",
+        alt: "A beer tasting in Brussels",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/beer-food/2025-07_uitstap_BXL-Breweries-10.jpg",
+        alt: "A moment at Brussels Breweries",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/beer-food/2025-07_uitstap_BXL-Breweries-13.jpg",
+        alt: "A detail from Brussels Breweries",
+        aspectRatio: 0.67,
+      },
     ],
   },
   events: {
@@ -159,6 +174,52 @@ export const photographyThemes: Record<
   "travel-nature": {
     title: "Travel & Nature",
     description: "Places that invite you to pause and look a little longer.",
-    photos: [],
+    photos: [
+      {
+        src: "/photos/travel-nature/2025-07_uitstap_BXL-Paris-03.jpg",
+        alt: "A moment in Paris",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/travel-nature/2025-07_uitstap_BXL-Paris-28.jpg",
+        alt: "A view of Paris",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/travel-nature/2025-07_uitstap_BXL-Paris-31.jpg",
+        alt: "A detail from Paris",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/travel-nature/2025-07_uitstap_Diest-04.jpg",
+        alt: "A view in Diest",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/travel-nature/2025-07_uitstap_Diest-29.jpg",
+        alt: "A moment in Diest",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/travel-nature/2025-08_reis_Eindhoven-35.jpg",
+        alt: "A scene in Eindhoven",
+        aspectRatio: 0.67,
+      },
+      {
+        src: "/photos/travel-nature/2025-09_reis_athene-05.jpg",
+        alt: "A view in Athens",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/travel-nature/2025-09_reis_athene-08.jpg",
+        alt: "A moment in Athens",
+        aspectRatio: 1.5,
+      },
+      {
+        src: "/photos/travel-nature/2025-09_reis_athene-41.jpg",
+        alt: "A detail from Athens",
+        aspectRatio: 0.75,
+      },
+    ],
   },
 };
