@@ -18,8 +18,35 @@ const pirata = Pirata_One({
 });
 
 export const metadata: Metadata = {
-  title: "Hannah Casier",
-  description: "Full Stack Developer",
+  metadataBase: new URL("https://hannahc.be"),
+  title: {
+    default: "Hannah Casier | Digital Professional",
+    template: "%s | Hannah Casier",
+  },
+  description:
+    "Digital professional with a background in web development, design, and visual communication.",
+  authors: [{ name: "Hannah Casier" }],
+  creator: "Hannah Casier",
+  openGraph: {
+    type: "website",
+    locale: "en_BE",
+    siteName: "Hannah Casier",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 627,
+        alt: "Hannah Casier, Digital Professional",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
