@@ -169,6 +169,11 @@ export const photographyThemes: Record<
         alt: "A portrait at the Meimarkt / Een portret op de Meimarkt",
         aspectRatio: 0.67,
       },
+      {
+        src: "/photos/events/brusselsbeerproject-wanderlust-1.jpg",
+        alt: "Queuing for a beer at the Wanderlust beer festival in Brussels / In de rij voor een biertje op het Wanderlust bierfestival in Brussel",
+        aspectRatio: 0.67,
+      },
     ],
   },
   "travel-nature": {
