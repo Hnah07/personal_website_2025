@@ -112,7 +112,7 @@ export default function PhotographyPortfolioPage() {
             ))}
           </div>
           <p className="mb-0 mt-6 hidden text-xs text-eerie-black/55 dark:text-parchment/55 lg:block">
-            {new Date().getFullYear()} Hannah Casier
+            &copy; {new Date().getFullYear()} Hannah Casier
           </p>
         </div>
       </aside>
