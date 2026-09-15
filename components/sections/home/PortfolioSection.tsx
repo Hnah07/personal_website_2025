@@ -17,7 +17,7 @@ const PortfolioSection = () => {
     },
     {
       title: "Photography",
-      image: "/boottocht.jpg",
+      image: "./photos/travel-nature/2025-09_reis_athene-41.jpg",
       href: "/photography",
     },
   ];
